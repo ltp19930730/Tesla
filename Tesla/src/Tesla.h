@@ -4,6 +4,10 @@
 
 #include "Tesla/Application.h"
 
-// ---- Entry point-----
+// ----- Logger -------
+
+#include "Tesla/Log.h"
+
+// ---- Entry point -----
 
 #include "Tesla/EntryPoint.h"

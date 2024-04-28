@@ -1,0 +1,3 @@
+[submodule "Tesla/vendor"]
+	path = Tesla/vendor
+	url = https://github.com/gabime/spdlog
