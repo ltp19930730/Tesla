@@ -26,13 +26,14 @@ project "Tesla"
 
     includedirs
     {
-        "Tesla/vendor/spdlog/include"
+        "%{prj.name}/src",
+        "%{prj.name}/vendor/spdlog/include"
     }
 
     filter "system:windows" 
         cppdialect "C++17"
         staticruntime "on"
-        systemversion "10.0.22621.0"
+        systemversion "latest"
 
     defines {
         "TL_PLATFORM_WINDOWS",
@@ -84,7 +85,7 @@ project "Sandbox"
     filter "system:windows" 
         cppdialect "C++17"
         staticruntime "on"
-        systemversion "10.0.22621.0"
+        systemversion "latest"
 
     defines {
         "TL_PLATFORM_WINDOWS",
