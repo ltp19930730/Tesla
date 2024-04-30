@@ -1,12 +1,9 @@
+#include "tlpch.h"
 #include "Application.h"
 
 #include "Tesla/Events/ApplicationEvent.h"
 #include "Tesla/Events/KeyEvent.h"
 #include "Tesla/Log.h"
-
-#include <iostream>
-#include <chrono>
-#include <thread>
 
 namespace Tesla {
 	Application::Application()

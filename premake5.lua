@@ -18,6 +18,9 @@ project "Tesla"
     targetdir("bin/" .. outputdir .. "/%{prj.name}")
     objdir("bin-int/" .. outputdir .. "/%{prj.name}")
 
+    pchheader "tlpch.h"
+    pchsource "Tesla/src/tlpch.cpp"
+
     files
     {
         "%{prj.name}/src/**.h",

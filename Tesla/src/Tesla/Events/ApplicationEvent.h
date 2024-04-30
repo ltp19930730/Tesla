@@ -2,8 +2,6 @@
 
 #include "Event.h"
 
-#include <sstream>
-
 namespace Tesla {
 
 	class TL_API WindowResizeEvent : public Event

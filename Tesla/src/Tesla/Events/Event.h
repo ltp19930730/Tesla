@@ -2,9 +2,6 @@
 
 #include "Tesla/Core.h"
 
-#include <functional>
-#include <string>
-
 namespace Tesla {
 	enum class EventType
 	{
