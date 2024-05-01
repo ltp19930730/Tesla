@@ -5,9 +5,12 @@
 #include "Tesla/Events/KeyEvent.h"
 #include "Tesla/Log.h"
 
+#include <GLFW/glfw3.h>
+
 namespace Tesla {
 	Application::Application()
 	{
+		m_Window = std::unique_ptr<Window>(Window::Create());
 	}
 
 	Application::~Application()
@@ -29,9 +32,10 @@ namespace Tesla {
 			TL_WARN(e2.ToString())
 		}
 
-		while (true) {
-			std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-			TL_TRACE("Run game engine in 1 fps")
+		while (m_Running) {
+			glClearColor(1, 0, 1, 1);
+			glClear(GL_COLOR_BUFFER_BIT);
+			m_Window->OnUpdate();
 		}
 	}
 }

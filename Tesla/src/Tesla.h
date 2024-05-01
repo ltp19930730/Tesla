@@ -11,3 +11,7 @@
 // ---- Entry point -----
 
 #include "Tesla/EntryPoint.h"
+
+// ----- Include pch header ------
+
+#include "tlpch.h"

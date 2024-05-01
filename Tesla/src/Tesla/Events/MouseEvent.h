@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Event.h"
+#include "tlpch.h"
 
 namespace Tesla {
 
@@ -43,6 +44,7 @@ namespace Tesla {
 		}
 
 		EVENT_CLASS_TYPE(MouseScolled)
+
 		EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput)
 	private:
 		float m_XOffset, m_YOffset;
