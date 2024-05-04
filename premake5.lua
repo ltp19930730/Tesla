@@ -12,8 +12,10 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 IncludeDir = {}
 IncludeDir["GLFW"] = "Tesla/vendor/GLFW/include"
+IncludeDir["Glad"] = "Tesla/vendor/Glad/include"
 
 include "Tesla/vendor/GLFW"
+include "Tesla/vendor/GLAD"
 
 project "Tesla"
     location "Tesla"
@@ -36,12 +38,14 @@ project "Tesla"
     {
         "%{prj.name}/src",
         "%{prj.name}/vendor/spdlog/include",
-        "%{IncludeDir.GLFW}"
+        "%{IncludeDir.GLFW}",
+        "%{IncludeDir.Glad}",
     }
 
     links
     {
         "GLFW",
+        "Glad",
         "opengl32.lib"
     }
 
@@ -52,7 +56,8 @@ project "Tesla"
 
     defines {
         "TL_PLATFORM_WINDOWS",
-        "TL_BUILD_DLL"
+        "TL_BUILD_DLL",
+        "GLFW_INCLUDE_NONE",
     }
 
     postbuildcommands
