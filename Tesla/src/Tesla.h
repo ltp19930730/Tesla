@@ -4,6 +4,10 @@
 
 #include "Tesla/Application.h"
 
+// ----- Layer -------
+
+#include "Tesla/Layer.h"
+
 // ----- Logger -------
 
 #include "Tesla/Log.h"

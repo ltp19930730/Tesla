@@ -8,7 +8,7 @@ namespace Tesla {
 	std::shared_ptr<spdlog::logger> Log::s_clientLogger;
 
 	void Log::init() {
-		spdlog::set_pattern("[%H:%M:%S %z] [%n] [%^---%L---%$] [thread %t] %v");
+		spdlog::set_pattern("%^[%T] %n: %v%$");
 		s_coreLogger = spdlog::stdout_color_mt("TESLA");
 		s_coreLogger->set_level(spdlog::level::trace);
 

@@ -62,15 +62,18 @@ project "Tesla"
 
     filter "configurations:Debug"
         defines "TL_DEBUG"
+        buildoptions "/MDd"
         symbols "On"
 
     filter "configurations:Release"
-    defines "TL_RELEASE"
-    symbols "On"
+        defines "TL_RELEASE"
+        buildoptions "/MDd"
+        symbols "On"
         
     filter "configurations:Dist"
-    defines "TL_DIST"
-    symbols "On"
+        defines "TL_DIST"
+        buildoptions "/MDd"
+        symbols "On"
 
 project "Sandbox"
     location "Sandbox"
@@ -108,12 +111,15 @@ project "Sandbox"
 
     filter "configurations:Debug"
         defines "TL_DEBUG"
+        buildoptions "/MDd"
         symbols "On"
 
     filter "configurations:Release"
         defines "TL_RELEASE"
+        buildoptions "/MDd"
         symbols "On"
         
     filter "configurations:Dist"
         defines "TL_DIST"
+        buildoptions "/MDd"
         symbols "On"
