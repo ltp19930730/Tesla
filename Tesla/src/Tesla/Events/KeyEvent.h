@@ -6,7 +6,7 @@ namespace Tesla {
 	class TL_API KeyEvent : public Event
 	{
 	public:
-		inline int GeyKeyCode() const { return m_KeyCode; }
+		inline int GetKeyCode() const { return m_KeyCode; }
 
 		EVENT_CLASS_CATEGORY(EventCategoryKeyboard | EventCategoryInput)
 	protected:
@@ -48,5 +48,21 @@ namespace Tesla {
 		}
 
 		EVENT_CLASS_TYPE(KeyReleased)
+	};
+
+	class TL_API KeyTypedEvent : public KeyEvent
+	{
+	public:
+		KeyTypedEvent(int keycode)
+			: KeyEvent(keycode) {}
+
+		std::string ToString() const override
+		{
+			std::stringstream ss;
+			ss << "KeyTypedEvent: " << m_KeyCode;
+			return ss.str();
+		}
+
+		EVENT_CLASS_TYPE(KeyTyped)
 	};
 }
