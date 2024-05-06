@@ -12,6 +12,8 @@
 
 #include "Tesla/Log.h"
 
+#include "Tesla/ImGui/ImGuiLayer.h"
+
 // ---- Entry point -----
 
 #include "Tesla/EntryPoint.h"
