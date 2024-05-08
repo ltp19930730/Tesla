@@ -1,5 +1,6 @@
 workspace "Tesla"
     architecture "x64"
+    startproject "Sandbox"
 
     configurations
     {
@@ -18,6 +19,7 @@ IncludeDir["ImGui"] = "Tesla/vendor/imgui"
 include "Tesla/vendor/GLFW"
 include "Tesla/vendor/GLAD"
 include "Tesla/vendor/imgui"
+
 
 project "Tesla"
     location "Tesla"
