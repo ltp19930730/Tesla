@@ -16,15 +16,17 @@ IncludeDir["GLFW"] = "Tesla/vendor/GLFW/include"
 IncludeDir["Glad"] = "Tesla/vendor/Glad/include"
 IncludeDir["ImGui"] = "Tesla/vendor/imgui"
 
-include "Tesla/vendor/GLFW"
-include "Tesla/vendor/GLAD"
-include "Tesla/vendor/imgui"
-
+group "Dependencies"
+    include "Tesla/vendor/GLFW"
+    include "Tesla/vendor/GLAD"
+    include "Tesla/vendor/imgui"
+group ""
 
 project "Tesla"
     location "Tesla"
     kind "SharedLib"
     language "C++"
+    staticruntime "off"
 
     targetdir("bin/" .. outputdir .. "/%{prj.name}")
     objdir("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -57,39 +59,39 @@ project "Tesla"
 
     filter "system:windows" 
         cppdialect "C++17"
-        staticruntime "on"
         systemversion "latest"
 
-    defines {
-        "TL_PLATFORM_WINDOWS",
-        "TL_BUILD_DLL",
-        "GLFW_INCLUDE_NONE",
-    }
+        defines {
+            "TL_PLATFORM_WINDOWS",
+            "TL_BUILD_DLL",
+            "GLFW_INCLUDE_NONE",
+        }
 
-    postbuildcommands
-    {
-        ("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Sandbox")
-    }
+        postbuildcommands
+        {
+            ("{COPY} %{cfg.buildtarget.relpath} \"../bin/" .. outputdir .. "/Sandbox/\"")
+        }
 
     filter "configurations:Debug"
         defines "TL_DEBUG"
-        buildoptions "/MDd"
+        runtime "Debug"
         symbols "On"
 
     filter "configurations:Release"
         defines "TL_RELEASE"
-        buildoptions "/MDd"
+        runtime "Release"
         symbols "On"
         
     filter "configurations:Dist"
         defines "TL_DIST"
-        buildoptions "/MDd"
+        runtime "Release"
         symbols "On"
 
 project "Sandbox"
     location "Sandbox"
     kind "ConsoleApp"
     language "C++"
+    staticruntime "off"
 
     targetdir("bin/" .. outputdir .. "/%{prj.name}")
     objdir("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -113,24 +115,23 @@ project "Sandbox"
 
     filter "system:windows" 
         cppdialect "C++17"
-        staticruntime "on"
         systemversion "latest"
 
-    defines {
-        "TL_PLATFORM_WINDOWS",
-    }
+        defines {
+            "TL_PLATFORM_WINDOWS",
+        }
 
     filter "configurations:Debug"
         defines "TL_DEBUG"
-        buildoptions "/MDd"
+        runtime "Debug"
         symbols "On"
 
     filter "configurations:Release"
         defines "TL_RELEASE"
-        buildoptions "/MDd"
+        runtime "Release"
         symbols "On"
         
     filter "configurations:Dist"
         defines "TL_DIST"
-        buildoptions "/MDd"
+        runtime "Release"
         symbols "On"
