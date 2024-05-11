@@ -12,6 +12,11 @@
 
 #include "Tesla/Log.h"
 
+// ----- Input -------
+#include "Tesla/Input.h"
+#include "Tesla/KeyCodes.h"
+#include "Tesla/MouseButtonCodes.h"
+
 #include "Tesla/ImGui/ImGuiLayer.h"
 
 // ---- Entry point -----

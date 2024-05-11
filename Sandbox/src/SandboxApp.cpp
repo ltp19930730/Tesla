@@ -12,12 +12,19 @@ public:
 
 	void OnUpdate() override
 	{
-		TL_INFO("ExampleLayer::Update");
+		if (Tesla::Input::IsKeyPressed(TL_KEY_TAB))
+			TL_TRACE("Tab key is pressed (poll)!");
 	}
 
 	void OnEvent(Tesla::Event& event) override
 	{
-		TL_TRACE("{0}", event.ToString());
+		if (event.GetEventType() == Tesla::EventType::KeyPressed)
+		{
+			Tesla::KeyPressedEvent& e = (Tesla::KeyPressedEvent&)event;
+			if (e.GetKeyCode() == TL_KEY_TAB)
+				TL_TRACE("Tab key is pressed (event)!");
+			TL_TRACE("{0}", (char)e.GetKeyCode());
+		}
 	}
 };
 
