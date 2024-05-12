@@ -15,12 +15,7 @@ IncludeDir = {}
 IncludeDir["GLFW"] = "Tesla/vendor/GLFW/include"
 IncludeDir["Glad"] = "Tesla/vendor/Glad/include"
 IncludeDir["ImGui"] = "Tesla/vendor/imgui"
-
-group "Dependencies"
-    include "Tesla/vendor/GLFW"
-    include "Tesla/vendor/GLAD"
-    include "Tesla/vendor/imgui"
-group ""
+IncludeDir["glm"] = "Tesla/vendor/glm"
 
 project "Tesla"
     location "Tesla"
@@ -38,6 +33,8 @@ project "Tesla"
     {
         "%{prj.name}/src/**.h",
         "%{prj.name}/src/**.cpp",
+		"%{prj.name}/vendor/glm/glm/**.hpp",
+		"%{prj.name}/vendor/glm/glm/**.inl",
     }
 
     includedirs
@@ -47,6 +44,7 @@ project "Tesla"
         "%{IncludeDir.GLFW}",
         "%{IncludeDir.Glad}",
         "%{IncludeDir.ImGui}",
+        "%{IncludeDir.glm}",
     }
 
     links
@@ -105,7 +103,8 @@ project "Sandbox"
     includedirs
     {
         "Tesla/vendor/spdlog/include",
-        "Tesla/src"
+        "Tesla/src",
+        "%{IncludeDir.glm}",
     }
 
     links
