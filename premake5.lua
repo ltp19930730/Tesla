@@ -17,6 +17,12 @@ IncludeDir["Glad"] = "Tesla/vendor/Glad/include"
 IncludeDir["ImGui"] = "Tesla/vendor/imgui"
 IncludeDir["glm"] = "Tesla/vendor/glm"
 
+group "Dependencies"
+    include "Tesla/vendor/GLFW"
+    include "Tesla/vendor/GLAD"
+    include "Tesla/vendor/imgui"
+group ""
+
 project "Tesla"
     location "Tesla"
     kind "SharedLib"
@@ -104,12 +110,14 @@ project "Sandbox"
     {
         "Tesla/vendor/spdlog/include",
         "Tesla/src",
+        "Tesla/vendor",
         "%{IncludeDir.glm}",
     }
 
     links
     {
         "Tesla"
+        "ImGui",
     }
 
     filter "system:windows" 

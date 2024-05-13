@@ -1,5 +1,6 @@
 #include <tlpch.h>
 #include <Tesla.h>
+#include "imgui/imgui.h"
 
 
 class ExampleLayer : public Tesla::Layer
@@ -10,13 +11,13 @@ public:
 	{
 	}
 
-	void OnUpdate() override
+	virtual void OnUpdate() override
 	{
 		if (Tesla::Input::IsKeyPressed(TL_KEY_TAB))
 			TL_TRACE("Tab key is pressed (poll)!");
 	}
 
-	void OnEvent(Tesla::Event& event) override
+	virtual void OnEvent(Tesla::Event& event) override
 	{
 		if (event.GetEventType() == Tesla::EventType::KeyPressed)
 		{
@@ -26,6 +27,10 @@ public:
 			TL_TRACE("{0}", (char)e.GetKeyCode());
 		}
 	}
+
+	virtual void OnImGuiRender() override
+	{
+	}
 };
 
 class Sandbox : public Tesla::Application
@@ -34,7 +39,6 @@ public:
 	Sandbox()
 	{
 		PushLayer(new ExampleLayer());
-		PushOverlay(new Tesla::ImGuiLayer());
 	}
 
 	~Sandbox()
