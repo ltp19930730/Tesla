@@ -25,9 +25,10 @@ group ""
 
 project "Tesla"
     location "Tesla"
-    kind "SharedLib"
+    kind "StaticLib"
     language "C++"
-    staticruntime "off"
+    cppdialect "C++17"
+	staticruntime "on"
 
     targetdir("bin/" .. outputdir .. "/%{prj.name}")
     objdir("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -42,6 +43,11 @@ project "Tesla"
 		"%{prj.name}/vendor/glm/glm/**.hpp",
 		"%{prj.name}/vendor/glm/glm/**.inl",
     }
+
+    defines
+	{
+		"_CRT_SECURE_NO_WARNINGS"
+	}
 
     includedirs
     {
@@ -62,7 +68,6 @@ project "Tesla"
     }
 
     filter "system:windows" 
-        cppdialect "C++17"
         systemversion "latest"
 
         defines {
@@ -71,31 +76,27 @@ project "Tesla"
             "GLFW_INCLUDE_NONE",
         }
 
-        postbuildcommands
-        {
-            ("{COPY} %{cfg.buildtarget.relpath} \"../bin/" .. outputdir .. "/Sandbox/\"")
-        }
-
     filter "configurations:Debug"
         defines "TL_DEBUG"
         runtime "Debug"
-        symbols "On"
+        symbols "on"
 
     filter "configurations:Release"
         defines "TL_RELEASE"
         runtime "Release"
-        symbols "On"
+        optimize  "on"
         
     filter "configurations:Dist"
         defines "TL_DIST"
         runtime "Release"
-        symbols "On"
+        optimize "on"
 
 project "Sandbox"
     location "Sandbox"
     kind "ConsoleApp"
     language "C++"
-    staticruntime "off"
+    cppdialect "C++17"
+	staticruntime "on"
 
     targetdir("bin/" .. outputdir .. "/%{prj.name}")
     objdir("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -116,12 +117,10 @@ project "Sandbox"
 
     links
     {
-        "Tesla"
-        "ImGui",
+        "Tesla",
     }
 
     filter "system:windows" 
-        cppdialect "C++17"
         systemversion "latest"
 
         defines {
@@ -131,14 +130,14 @@ project "Sandbox"
     filter "configurations:Debug"
         defines "TL_DEBUG"
         runtime "Debug"
-        symbols "On"
+        symbols "on"
 
     filter "configurations:Release"
         defines "TL_RELEASE"
         runtime "Release"
-        symbols "On"
+        optimize  "on"
         
     filter "configurations:Dist"
         defines "TL_DIST"
         runtime "Release"
-        symbols "On"
+        optimize  "on"

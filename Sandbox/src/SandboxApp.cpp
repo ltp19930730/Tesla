@@ -1,6 +1,5 @@
 #include <tlpch.h>
 #include <Tesla.h>
-#include "imgui/imgui.h"
 
 
 class ExampleLayer : public Tesla::Layer

@@ -133,7 +133,7 @@ namespace Tesla {
 		{
 				WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 
-				MouseScrolledEvent event(xoffset, yoffset);
+				MouseScrolledEvent event((float)xoffset, (float)yoffset);
 
 				data.EventCallback(event);
 		});
@@ -142,7 +142,7 @@ namespace Tesla {
 		{
 				WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 
-				MouseMovedEvent event(xpos, ypos);
+				MouseMovedEvent event((float)xpos, (float)ypos);
 
 				data.EventCallback(event);
 		});
