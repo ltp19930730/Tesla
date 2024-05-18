@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Tesla/Window.h"
-
+#include "Tesla/Renderer/GraphicsContext.h"
 
 #include <GLFW/glfw3.h>
 
@@ -41,6 +41,8 @@ namespace Tesla {
 		};
 
 		WindowData m_Data;
+		GraphicsContext* m_Context;
+
 
 	};
 }

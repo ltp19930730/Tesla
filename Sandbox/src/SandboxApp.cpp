@@ -1,6 +1,8 @@
 #include <tlpch.h>
 #include <Tesla.h>
 
+#include "imgui/imgui.h"
+
 
 class ExampleLayer : public Tesla::Layer
 {
@@ -29,7 +31,11 @@ public:
 
 	virtual void OnImGuiRender() override
 	{
+		ImGui::Begin("Test");
+		ImGui::Text("Hello World");
+		ImGui::End();
 	}
+
 };
 
 class Sandbox : public Tesla::Application
