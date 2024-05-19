@@ -7,6 +7,7 @@
 #include "Tesla/Events/Event.h"
 #include "Tesla/LayerStack.h"
 #include "Tesla/ImGui/ImGuiLayer.h"
+#include "Tesla/Renderer/Shader.h"
 
 
 namespace Tesla {
@@ -34,6 +35,7 @@ namespace Tesla {
 		static Application* s_Instance;
 
 		unsigned int m_VertexArray, m_VertexBuffer, m_IndexBuffer;
+		std::unique_ptr<Shader> m_Shader;
 	};
 
 	Application* CreateApplication();
