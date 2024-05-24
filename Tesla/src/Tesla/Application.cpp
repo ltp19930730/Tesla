@@ -13,6 +13,27 @@ namespace Tesla {
 
     Application* Application::s_Instance = nullptr;
 
+	static GLenum ShaderDataTypeToOpenGLBaseType(ShaderDataType type)
+	{
+		switch (type)
+		{
+		case Tesla::ShaderDataType::Float:    return GL_FLOAT;
+		case Tesla::ShaderDataType::Float2:   return GL_FLOAT;
+		case Tesla::ShaderDataType::Float3:   return GL_FLOAT;
+		case Tesla::ShaderDataType::Float4:   return GL_FLOAT;
+		case Tesla::ShaderDataType::Mat3:     return GL_FLOAT;
+		case Tesla::ShaderDataType::Mat4:     return GL_FLOAT;
+		case Tesla::ShaderDataType::Int:      return GL_INT;
+		case Tesla::ShaderDataType::Int2:     return GL_INT;
+		case Tesla::ShaderDataType::Int3:     return GL_INT;
+		case Tesla::ShaderDataType::Int4:     return GL_INT;
+		case Tesla::ShaderDataType::Bool:     return GL_BOOL;
+		}
+
+		TL_CORE_ASSERT(false, "Unknown ShaderDataType!");
+		return 0;
+	}
+
 	Application::Application()
 	{
 		TL_CORE_ASSERT(!s_Instance, "Application already exists!")
@@ -25,12 +46,22 @@ namespace Tesla {
 
 
 		// Create vertext buffer
-		float vertices[3 * 3] = {
-			-0.5f, -0.5f, 0.0f,
-			 0.5f, -0.5f, 0.0f,
-			 0.0f,  0.5f, 0.0f,
+		float vertices[3 * 7] = {
+			-0.5f, -0.5f, 0.0f, 0.8f, 0.2f, 0.8f, 1.0f,
+			 0.5f, -0.5f, 0.0f, 0.2f, 0.3f, 0.8f, 1.0f,
+			 0.0f,  0.5f, 0.0f, 0.8f, 0.8f, 0.2f, 1.0f
 		};
 		m_VertexBuffer.reset(VertexBuffer::Create(vertices, sizeof(vertices)));
+
+		{
+			BufferLayout layout = {
+				{ ShaderDataType::Float3, "a_Position" },
+				{ ShaderDataType::Float4, "a_Color" }
+			};
+
+			m_VertexBuffer->SetLayout(layout);
+		}
+
 
 		// Create index buffer
 		uint32_t indices[3] = { 0, 1, 2 };
@@ -38,13 +69,23 @@ namespace Tesla {
 
 		glCreateVertexArrays(1, &m_VertexArray);
 
-		// Bind the vertex buffer to the VAO
-		glVertexArrayVertexBuffer(m_VertexArray, 0, m_VertexBuffer->GetId(), 0, sizeof(float) * 3);
 
-		// Configure vertex attributes
-		glEnableVertexArrayAttrib(m_VertexArray, 0);
-		glVertexArrayAttribFormat(m_VertexArray, 0, 3, GL_FLOAT, GL_FALSE, 0);  // Position attribute
-		glVertexArrayAttribBinding(m_VertexArray, 0, 0);
+		uint32_t index = 0;
+		const auto& layout = m_VertexBuffer->GetLayout();
+		for (const auto& element : layout)
+		{
+			glEnableVertexArrayAttrib(m_VertexArray, index);
+			glVertexArrayAttribFormat(m_VertexArray, index,
+				element.GetComponentCount(),
+				ShaderDataTypeToOpenGLBaseType(element.Type),
+				element.Normalized ? GL_TRUE : GL_FALSE,
+				element.Offset);
+			// Associate attributes with binding points
+			glVertexArrayAttribBinding(m_VertexArray, index, index);
+			// Bind the buffer to the VAO's vertex buffer binding point
+			glVertexArrayVertexBuffer(m_VertexArray, index, m_VertexBuffer->GetId(), 0, layout.GetStride());
+			index++;
+		}
 
 		// Bind the index buffer to the VAO
 		glVertexArrayElementBuffer(m_VertexArray, m_IndexBuffer->GetId());
@@ -53,10 +94,13 @@ namespace Tesla {
 			#version 330 core
 			
 			layout(location = 0) in vec3 a_Position;
+			layout(location = 1) in vec4 a_Color;
 			out vec3 v_Position;
+			out vec4 v_Color;
 			void main()
 			{
 				v_Position = a_Position;
+				v_Color = a_Color;
 				gl_Position = vec4(a_Position, 1.0);	
 			}
 		)";
@@ -66,9 +110,11 @@ namespace Tesla {
 			
 			layout(location = 0) out vec4 color;
 			in vec3 v_Position;
+			in vec4 v_Color;
+
 			void main()
 			{
-				color = vec4(v_Position * 0.5 + 0.5, 1.0);
+				color = v_Color;
 			}
 		)";
 
