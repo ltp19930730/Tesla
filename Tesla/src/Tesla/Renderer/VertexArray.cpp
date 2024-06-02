@@ -10,8 +10,8 @@ namespace Tesla {
 	{
 		switch (Renderer::GetAPI())
 		{
-		case RendererAPI::None:    TL_CORE_ASSERT(false, "RendererAPI::None is currently not supported!"); return nullptr;
-		case RendererAPI::OpenGL:  return new OpenGLVertexArray();
+		case RendererAPI::API::None:    TL_CORE_ASSERT(false, "RendererAPI::None is currently not supported!"); return nullptr;
+		case RendererAPI::API::OpenGL:  return new OpenGLVertexArray();
 		}
 
 		TL_CORE_ASSERT(false, "Unknown RendererAPI!");
