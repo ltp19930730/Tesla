@@ -10,6 +10,7 @@
 #include "Tesla/Renderer/Shader.h"
 #include "Tesla/Renderer/Buffer.h"
 #include "Tesla/Renderer/VertexArray.h"
+#include "Tesla/Renderer/OrthographicCamera.h"
 
 
 namespace Tesla {
@@ -37,10 +38,12 @@ namespace Tesla {
 		static Application* s_Instance;
 
 		std::shared_ptr<VertexArray> m_VertexArray;
-		std::unique_ptr<Shader> m_Shader;
+		std::shared_ptr<Shader> m_Shader;
 
 		std::shared_ptr<Shader> m_BlueShader;
 		std::shared_ptr<VertexArray> m_SquareVA;
+
+		OrthographicCamera m_Camera;
 	};
 
 	Application* CreateApplication();
