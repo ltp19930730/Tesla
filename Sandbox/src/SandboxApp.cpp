@@ -8,7 +8,7 @@ class ExampleLayer : public Tesla::Layer
 {
 public:
 	ExampleLayer()
-		: Layer("Example"), m_Camera(-1.6f, 1.6f, -0.9f, 0.9f)
+		: Layer("Example"), m_Camera(-1.6f, 1.6f, -0.9f, 0.9f), m_CameraPosition(0.0f)
 	{
 		m_VertexArray.reset(Tesla::VertexArray::Create());
 
@@ -122,11 +122,29 @@ public:
 
 	virtual void OnUpdate() override
 	{
+		if (Tesla::Input::IsKeyPressed(TL_KEY_LEFT))
+			m_CameraPosition.x -= m_CameraMoveSpeed;
+
+		if (Tesla::Input::IsKeyPressed(TL_KEY_RIGHT))
+			m_CameraPosition.x += m_CameraMoveSpeed;
+
+		if (Tesla::Input::IsKeyPressed(TL_KEY_UP))
+			m_CameraPosition.y += m_CameraMoveSpeed;
+
+		if (Tesla::Input::IsKeyPressed(TL_KEY_DOWN))
+			m_CameraPosition.y -= m_CameraMoveSpeed;
+
+		if (Tesla::Input::IsKeyPressed(TL_KEY_A))
+			m_CameraRotation -= m_CameraRotationSpeed;
+
+		if (Tesla::Input::IsKeyPressed(TL_KEY_D))
+			m_CameraRotation += m_CameraRotationSpeed;
+
 		Tesla::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
 		Tesla::RenderCommand::Clear();
 
-		m_Camera.SetPosition({ 0.5f, 0.5f, 0.0f });
-		m_Camera.SetRotation(180.0f);
+		m_Camera.SetPosition(m_CameraPosition);
+		m_Camera.SetRotation(m_CameraRotation);
 
 		Tesla::Renderer::BeginScene(m_Camera);
 
@@ -152,7 +170,11 @@ private:
 	std::shared_ptr<Tesla::VertexArray> m_SquareVA;
 
 	Tesla::OrthographicCamera m_Camera;
+	glm::vec3 m_CameraPosition;
+	float m_CameraMoveSpeed = 0.1f;
 
+	float m_CameraRotation = 0.0f;
+	float m_CameraRotationSpeed = 2.0f;
 };
 
 class Sandbox : public Tesla::Application

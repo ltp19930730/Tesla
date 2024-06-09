@@ -1,16 +1,13 @@
 #pragma once
 
 #include "Core.h"
-#include "Events/Event.h"
+
 #include "Window.h"
 #include "Tesla/Events/ApplicationEvent.h"
 #include "Tesla/Events/Event.h"
 #include "Tesla/LayerStack.h"
+
 #include "Tesla/ImGui/ImGuiLayer.h"
-#include "Tesla/Renderer/Shader.h"
-#include "Tesla/Renderer/Buffer.h"
-#include "Tesla/Renderer/VertexArray.h"
-#include "Tesla/Renderer/OrthographicCamera.h"
 
 
 namespace Tesla {
