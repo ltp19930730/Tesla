@@ -12,6 +12,8 @@
 
 #include "Tesla/Log.h"
 
+#include "Tesla/Core/Timestep.h"
+
 // ----- Input -------
 #include "Tesla/Input.h"
 #include "Tesla/KeyCodes.h"

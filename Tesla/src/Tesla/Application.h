@@ -7,6 +7,8 @@
 #include "Tesla/Events/Event.h"
 #include "Tesla/LayerStack.h"
 
+#include "Tesla/Core/Timestep.h"
+
 #include "Tesla/ImGui/ImGuiLayer.h"
 
 
@@ -32,6 +34,8 @@ namespace Tesla {
 		ImGuiLayer* m_ImGuiLayer;
 		bool m_Running = true;
 		LayerStack m_LayerStack;
+		float m_LastFrameTime = 0.0f;
+
 		static Application* s_Instance;
 	};
 

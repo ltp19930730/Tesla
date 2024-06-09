@@ -2,6 +2,7 @@
 
 #include "tlpch.h"
 #include "Tesla/Core.h"
+#include "Tesla/Core/Timestep.h"
 #include "Tesla/Events/Event.h"
 
 namespace Tesla {
@@ -13,7 +14,7 @@ namespace Tesla {
 
 		virtual void OnAttach() {}
 		virtual void OnDetach() {}
-		virtual void OnUpdate() {}
+		virtual void OnUpdate(Timestep ts) {}
 		virtual void OnEvent(Event& event) {}
 		virtual void OnImGuiRender() {};
 
