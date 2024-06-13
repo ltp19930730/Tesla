@@ -152,6 +152,8 @@ public:
 		if (Tesla::Input::IsKeyPressed(TL_KEY_X))
 			m_Camera.ZoomOut(m_ZoomAmount * ts);
 
+		m_RotationAngle += m_RotationSpeed * ts; // Update the rotation angle
+
 		Tesla::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
 		Tesla::RenderCommand::Clear();
 
@@ -161,10 +163,13 @@ public:
 		Tesla::Renderer::BeginScene(m_Camera);
 
 		glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
+		glm::mat4 rotation = glm::rotate(glm::mat4(1.0f), glm::radians(m_RotationAngle), glm::vec3(0, 1, 0)); // Rotate around X-axis
 
 
 		std::dynamic_pointer_cast<Tesla::OpenGLShader>(m_FlatColorShader)->Bind();
 		std::dynamic_pointer_cast<Tesla::OpenGLShader>(m_FlatColorShader)->UploadUniformFloat3("u_Color", m_SquareColor);
+
+		glm::vec3 center(0.0f, 0.0f, 0.0f); // Center of the heart shape
 
 		for (int y = -20; y < 20; y++)
 		{
@@ -176,8 +181,10 @@ public:
 				if (isInHeartShape(xf, yf))
 				{
 					glm::vec3 pos(xf, yf, 0.0f);
-				glm::mat4 transform = glm::translate(glm::mat4(1.0f), pos) * scale;
-				Tesla::Renderer::Submit(m_FlatColorShader, m_SquareVA, transform);
+					glm::mat4 transform = glm::translate(glm::mat4(1.0f), center) *
+						rotation *
+						glm::translate(glm::mat4(1.0f), -center + pos) * scale;
+					Tesla::Renderer::Submit(m_FlatColorShader, m_SquareVA, transform);
 			}
 		}
 		}
@@ -221,6 +228,9 @@ private:
 	float m_ZoomAmount = 1.0f;
 
 	glm::vec3 m_SquareColor = { 0.5f, 0.5f, 0.1f };
+
+	float m_RotationAngle = 0.0f;
+	float m_RotationSpeed = 40.0f;
 };
 
 class Sandbox : public Tesla::Application
