@@ -4,6 +4,7 @@
 #include "imgui/imgui.h"
 #include "Platform/OpenGL/OpenGLShader.h"
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 
 class ExampleLayer : public Tesla::Layer
@@ -145,6 +146,12 @@ public:
 		if (Tesla::Input::IsKeyPressed(TL_KEY_D))
 			m_CameraRotation += m_CameraRotationSpeed * ts;
 
+		if (Tesla::Input::IsKeyPressed(TL_KEY_Z))
+			m_Camera.ZoomIn(m_ZoomAmount * ts);
+
+		if (Tesla::Input::IsKeyPressed(TL_KEY_X))
+			m_Camera.ZoomOut(m_ZoomAmount * ts);
+
 		Tesla::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
 		Tesla::RenderCommand::Clear();
 
@@ -169,13 +176,13 @@ public:
 				if (isInHeartShape(xf, yf))
 				{
 					glm::vec3 pos(xf, yf, 0.0f);
-					glm::mat4 transform = glm::translate(glm::mat4(1.0f), pos) * scale;
-					Tesla::Renderer::Submit(m_FlatColorShader, m_SquareVA, transform);
-				}
+				glm::mat4 transform = glm::translate(glm::mat4(1.0f), pos) * scale;
+				Tesla::Renderer::Submit(m_FlatColorShader, m_SquareVA, transform);
 			}
 		}
+		}
 
-		Tesla::Renderer::Submit(m_Shader, m_VertexArray);
+		//Tesla::Renderer::Submit(m_Shader, m_VertexArray);
 
 		Tesla::Renderer::EndScene();
 	}
@@ -186,9 +193,10 @@ public:
 
 	virtual void OnImGuiRender() override
 	{
+		ImGui::Begin("Settings");
+		ImGui::ColorEdit3("Square color", glm::value_ptr(m_SquareColor));
+		ImGui::End();
 	}
-
-
 
 private:
 
@@ -210,6 +218,7 @@ private:
 
 	float m_CameraRotation = 0.0f;
 	float m_CameraRotationSpeed = 180.0f;
+	float m_ZoomAmount = 1.0f;
 
 	glm::vec3 m_SquareColor = { 0.5f, 0.5f, 0.1f };
 };
