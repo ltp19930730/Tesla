@@ -15,13 +15,18 @@ public:
 	{
 		m_VertexArray.reset(Tesla::VertexArray::Create());
 
-		std::shared_ptr<Tesla::VertexBuffer> vertexBuffer;
+		Tesla::Ref<Tesla::VertexBuffer> vertexBuffer;
 
 		// Create vertext buffer
-		float vertices[3 * 7] = {
-			-0.5f, -0.5f, 0.0f, 0.8f, 0.2f, 0.8f, 1.0f,
-			 0.5f, -0.5f, 0.0f, 0.2f, 0.3f, 0.8f, 1.0f,
-			 0.0f,  0.5f, 0.0f, 0.8f, 0.8f, 0.2f, 1.0f
+		float vertices[] = {
+            -0.5f, -0.5f, -0.5f,  1.0f, 0.0f, 0.0f, 1.0f,
+             0.5f, -0.5f, -0.5f,  0.0f, 1.0f, 0.0f, 1.0f,
+             0.5f,  0.5f, -0.5f,  0.0f, 0.0f, 1.0f, 1.0f,
+            -0.5f,  0.5f, -0.5f,  1.0f, 1.0f, 0.0f, 1.0f,
+            -0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 1.0f, 1.0f,
+             0.5f, -0.5f,  0.5f,  0.0f, 1.0f, 1.0f, 1.0f,
+             0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f, 1.0f,
+            -0.5f,  0.5f,  0.5f,  0.0f, 0.0f, 1.0f, 1.0f
 		};
 		vertexBuffer.reset(Tesla::VertexBuffer::Create(vertices, sizeof(vertices)));
 
@@ -35,8 +40,15 @@ public:
 		m_VertexArray->AddVertexBuffer(vertexBuffer);
 
 		// Create index buffer
-		uint32_t indices[3] = { 0, 1, 2 };
-		std::shared_ptr<Tesla::IndexBuffer> indexBuffer;
+		uint32_t indices[] = {
+			0, 1, 2, 2, 3, 0,  // Back face
+			4, 5, 6, 6, 7, 4,  // Front face
+			4, 5, 1, 1, 0, 4,  // Bottom face
+			6, 7, 3, 3, 2, 6,  // Top face
+			4, 7, 3, 3, 0, 4,  // Left face
+			1, 5, 6, 6, 2, 1   // Right face
+		};
+		Tesla::Ref<Tesla::IndexBuffer> indexBuffer;
 		indexBuffer.reset(Tesla::IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
 		m_VertexArray->SetIndexBuffer(indexBuffer);
 
@@ -49,7 +61,7 @@ public:
 			-0.5f,  0.5f, 0.0f
 		};
 
-		std::shared_ptr<Tesla::VertexBuffer> squareVB;
+		Tesla::Ref<Tesla::VertexBuffer> squareVB;
 		squareVB.reset(Tesla::VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
 		squareVB->SetLayout({
 			{ Tesla::ShaderDataType::Float3, "a_Position" }
@@ -57,13 +69,13 @@ public:
 		m_SquareVA->AddVertexBuffer(squareVB);
 
 		uint32_t squareIndices[6] = { 0, 1, 2, 2, 3, 0 };
-		std::shared_ptr<Tesla::IndexBuffer> squareIB;
+		Tesla::Ref<Tesla::IndexBuffer> squareIB;
 		squareIB.reset(Tesla::IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t)));
 		m_SquareVA->SetIndexBuffer(squareIB);
 
 		std::string vertexSrc = R"(
 			#version 330 core
-			
+
 			layout(location = 0) in vec3 a_Position;
 			layout(location = 1) in vec4 a_Color;
 
@@ -76,7 +88,7 @@ public:
 			{
 				v_Position = a_Position;
 				v_Color = a_Color;
-				gl_Position = u_ViewProjection * u_Transform * vec4(a_Position, 1.0);	
+				gl_Position = u_ViewProjection * u_Transform * vec4(a_Position, 1.0);
 			}
 		)";
 
@@ -185,11 +197,15 @@ public:
 						rotation *
 						glm::translate(glm::mat4(1.0f), -center + pos) * scale;
 					Tesla::Renderer::Submit(m_FlatColorShader, m_SquareVA, transform);
+				}
 			}
 		}
-		}
 
-		//Tesla::Renderer::Submit(m_Shader, m_VertexArray);
+		// Cube
+		glm::mat4 transform = glm::rotate(glm::mat4(1.0f), glm::radians(m_RotationAngle), glm::vec3(1, 1, 0)) * scale; // Rotate around an arbitrary axis
+		std::dynamic_pointer_cast<Tesla::OpenGLShader>(m_Shader)->Bind();
+
+		Tesla::Renderer::Submit(m_Shader, m_VertexArray, transform);
 
 		Tesla::Renderer::EndScene();
 	}
@@ -213,11 +229,11 @@ private:
 		return val <= 0.0f;
 	}
 
-	std::shared_ptr<Tesla::VertexArray> m_VertexArray;
-	std::shared_ptr<Tesla::Shader> m_Shader;
+	Tesla::Ref<Tesla::VertexArray> m_VertexArray;
+	Tesla::Ref<Tesla::Shader> m_Shader;
 
-	std::shared_ptr<Tesla::Shader> m_FlatColorShader;
-	std::shared_ptr<Tesla::VertexArray> m_SquareVA;
+	Tesla::Ref<Tesla::Shader> m_FlatColorShader;
+	Tesla::Ref<Tesla::VertexArray> m_SquareVA;
 
 	Tesla::OrthographicCamera m_Camera;
 	glm::vec3 m_CameraPosition;
