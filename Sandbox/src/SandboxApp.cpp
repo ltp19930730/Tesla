@@ -54,17 +54,18 @@ public:
 
 		m_SquareVA.reset(Tesla::VertexArray::Create());
 
-		float squareVertices[3 * 4] = {
-			-0.5f, -0.5f, 0.0f,
-			 0.5f, -0.5f, 0.0f,
-			 0.5f,  0.5f, 0.0f,
-			-0.5f,  0.5f, 0.0f
+		float squareVertices[5 * 4] = {
+			-0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
+			 0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
+			 0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
+			-0.5f,  0.5f, 0.0f, 0.0f, 1.0f
 		};
 
 		Tesla::Ref<Tesla::VertexBuffer> squareVB;
 		squareVB.reset(Tesla::VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
 		squareVB->SetLayout({
-			{ Tesla::ShaderDataType::Float3, "a_Position" }
+			{ Tesla::ShaderDataType::Float3, "a_Position" },
+			{ Tesla::ShaderDataType::Float2, "a_TexCoord" }
 			});
 		m_SquareVA->AddVertexBuffer(squareVB);
 
@@ -136,6 +137,40 @@ public:
 
 		m_FlatColorShader.reset(Tesla::Shader::Create(flatColorShaderVertexSrc, flatColorShaderFragmentSrc));
 
+		std::string textureShaderVertexSrc = R"(
+			#version 330 core
+			
+			layout(location = 0) in vec3 a_Position;
+			layout(location = 1) in vec2 a_TexCoord;
+			uniform mat4 u_ViewProjection;
+			uniform mat4 u_Transform;
+			out vec2 v_TexCoord;
+			void main()
+			{
+				v_TexCoord = a_TexCoord;
+				gl_Position = u_ViewProjection * u_Transform * vec4(a_Position, 1.0);	
+			}
+		)";
+
+		std::string textureShaderFragmentSrc = R"(
+			#version 330 core
+			
+			layout(location = 0) out vec4 color;
+			in vec2 v_TexCoord;
+			
+			uniform sampler2D u_Texture;
+			void main()
+			{
+				color = texture(u_Texture, v_TexCoord);
+			}
+		)";
+
+		m_TextureShader.reset(Tesla::Shader::Create(textureShaderVertexSrc, textureShaderFragmentSrc));
+
+		m_Texture = Tesla::Texture2D::Create("assets/textures/corgi.png");
+
+		std::dynamic_pointer_cast<Tesla::OpenGLShader>(m_TextureShader)->Bind();
+		std::dynamic_pointer_cast<Tesla::OpenGLShader>(m_TextureShader)->UploadUniformInt("u_Texture", 0);
 	}
 
 	virtual void OnUpdate(Tesla::Timestep ts) override
@@ -181,6 +216,8 @@ public:
 		std::dynamic_pointer_cast<Tesla::OpenGLShader>(m_FlatColorShader)->Bind();
 		std::dynamic_pointer_cast<Tesla::OpenGLShader>(m_FlatColorShader)->UploadUniformFloat3("u_Color", m_SquareColor);
 
+		m_Texture->Bind();
+		
 		glm::vec3 center(0.0f, 0.0f, 0.0f); // Center of the heart shape
 
 		for (int y = -20; y < 20; y++)
@@ -196,7 +233,7 @@ public:
 					glm::mat4 transform = glm::translate(glm::mat4(1.0f), center) *
 						rotation *
 						glm::translate(glm::mat4(1.0f), -center + pos) * scale;
-					Tesla::Renderer::Submit(m_FlatColorShader, m_SquareVA, transform);
+					Tesla::Renderer::Submit(m_TextureShader, m_SquareVA, transform);
 				}
 			}
 		}
@@ -234,6 +271,9 @@ private:
 
 	Tesla::Ref<Tesla::Shader> m_FlatColorShader;
 	Tesla::Ref<Tesla::VertexArray> m_SquareVA;
+
+	Tesla::Ref<Tesla::Shader> m_TextureShader;
+	Tesla::Ref<Tesla::Texture2D> m_Texture;
 
 	Tesla::OrthographicCamera m_Camera;
 	glm::vec3 m_CameraPosition;
