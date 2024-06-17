@@ -167,7 +167,10 @@ public:
 
 		m_TextureShader.reset(Tesla::Shader::Create(textureShaderVertexSrc, textureShaderFragmentSrc));
 
+		m_BackgroundTexture = Tesla::Texture2D::Create("assets/textures/Checkerboard.png");
+
 		m_Texture = Tesla::Texture2D::Create("assets/textures/corgi.png");
+	
 
 		std::dynamic_pointer_cast<Tesla::OpenGLShader>(m_TextureShader)->Bind();
 		std::dynamic_pointer_cast<Tesla::OpenGLShader>(m_TextureShader)->UploadUniformInt("u_Texture", 0);
@@ -216,7 +219,6 @@ public:
 		std::dynamic_pointer_cast<Tesla::OpenGLShader>(m_FlatColorShader)->Bind();
 		std::dynamic_pointer_cast<Tesla::OpenGLShader>(m_FlatColorShader)->UploadUniformFloat3("u_Color", m_SquareColor);
 
-		m_Texture->Bind();
 		
 		glm::vec3 center(0.0f, 0.0f, 0.0f); // Center of the heart shape
 
@@ -233,6 +235,10 @@ public:
 					glm::mat4 transform = glm::translate(glm::mat4(1.0f), center) *
 						rotation *
 						glm::translate(glm::mat4(1.0f), -center + pos) * scale;
+					// Adding background checkboard
+					// m_BackgroundTexture->Bind();
+					// Tesla::Renderer::Submit(m_TextureShader, m_SquareVA, transform);
+					m_Texture->Bind();
 					Tesla::Renderer::Submit(m_TextureShader, m_SquareVA, transform);
 				}
 			}
@@ -273,7 +279,7 @@ private:
 	Tesla::Ref<Tesla::VertexArray> m_SquareVA;
 
 	Tesla::Ref<Tesla::Shader> m_TextureShader;
-	Tesla::Ref<Tesla::Texture2D> m_Texture;
+	Tesla::Ref<Tesla::Texture2D> m_Texture, m_BackgroundTexture;
 
 	Tesla::OrthographicCamera m_Camera;
 	glm::vec3 m_CameraPosition;
