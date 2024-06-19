@@ -106,7 +106,7 @@ public:
 			}
 		)";
 
-		m_Shader.reset(Tesla::Shader::Create(vertexSrc, fragmentSrc));
+		m_Shader = Tesla::Shader::Create("VertexPosColor", vertexSrc, fragmentSrc);
 
 
 		std::string flatColorShaderVertexSrc = R"(
@@ -135,45 +135,16 @@ public:
 			}
 		)";
 
-		m_FlatColorShader.reset(Tesla::Shader::Create(flatColorShaderVertexSrc, flatColorShaderFragmentSrc));
-
-		std::string textureShaderVertexSrc = R"(
-			#version 330 core
-			
-			layout(location = 0) in vec3 a_Position;
-			layout(location = 1) in vec2 a_TexCoord;
-			uniform mat4 u_ViewProjection;
-			uniform mat4 u_Transform;
-			out vec2 v_TexCoord;
-			void main()
-			{
-				v_TexCoord = a_TexCoord;
-				gl_Position = u_ViewProjection * u_Transform * vec4(a_Position, 1.0);	
-			}
-		)";
-
-		std::string textureShaderFragmentSrc = R"(
-			#version 330 core
-			
-			layout(location = 0) out vec4 color;
-			in vec2 v_TexCoord;
-			
-			uniform sampler2D u_Texture;
-			void main()
-			{
-				color = texture(u_Texture, v_TexCoord);
-			}
-		)";
-
-		m_TextureShader.reset(Tesla::Shader::Create(textureShaderVertexSrc, textureShaderFragmentSrc));
-
-		m_BackgroundTexture = Tesla::Texture2D::Create("assets/textures/Checkerboard.png");
+		m_FlatColorShader = Tesla::Shader::Create("FlatColor", flatColorShaderVertexSrc, flatColorShaderFragmentSrc);
 
 		m_Texture = Tesla::Texture2D::Create("assets/textures/corgi.png");
+		m_BackgroundTexture = Tesla::Texture2D::Create("assets/textures/Checkerboard.png");
+
+		auto textureShader = m_ShaderLibrary.Load("assets/shaders/Texture.glsl");
 	
 
-		std::dynamic_pointer_cast<Tesla::OpenGLShader>(m_TextureShader)->Bind();
-		std::dynamic_pointer_cast<Tesla::OpenGLShader>(m_TextureShader)->UploadUniformInt("u_Texture", 0);
+		std::dynamic_pointer_cast<Tesla::OpenGLShader>(textureShader)->Bind();
+		std::dynamic_pointer_cast<Tesla::OpenGLShader>(textureShader)->UploadUniformInt("u_Texture", 0);
 	}
 
 	virtual void OnUpdate(Tesla::Timestep ts) override
@@ -239,7 +210,8 @@ public:
 					// m_BackgroundTexture->Bind();
 					// Tesla::Renderer::Submit(m_TextureShader, m_SquareVA, transform);
 					m_Texture->Bind();
-					Tesla::Renderer::Submit(m_TextureShader, m_SquareVA, transform);
+					auto textureShader = m_ShaderLibrary.Get("Texture");
+					Tesla::Renderer::Submit(textureShader, m_SquareVA, transform);
 				}
 			}
 		}
@@ -272,13 +244,13 @@ private:
 		return val <= 0.0f;
 	}
 
+	Tesla::ShaderLibrary m_ShaderLibrary;
 	Tesla::Ref<Tesla::VertexArray> m_VertexArray;
 	Tesla::Ref<Tesla::Shader> m_Shader;
 
 	Tesla::Ref<Tesla::Shader> m_FlatColorShader;
 	Tesla::Ref<Tesla::VertexArray> m_SquareVA;
 
-	Tesla::Ref<Tesla::Shader> m_TextureShader;
 	Tesla::Ref<Tesla::Texture2D> m_Texture, m_BackgroundTexture;
 
 	Tesla::OrthographicCamera m_Camera;
