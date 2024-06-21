@@ -20,36 +20,9 @@ namespace Tesla {
 		m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;
 	}
 
-	void OrthographicCamera::RecalculateProjectionMatrix()
+	void OrthographicCamera::SetProjection(float left, float right, float bottom, float top)
 	{
-		m_ProjectionMatrix = glm::ortho(m_Left, m_Right, m_Bottom, m_Top, -1.0f, 1.0f);
+		m_ProjectionMatrix = glm::ortho(left, right, bottom, top, -1.0f, 1.0f);
 		m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;
-	}
-
-	void OrthographicCamera::ZoomIn(float amount)
-	{
-		// Ensure that we don't zoom in too much
-		float minZoom = 0.1f; // Minimum allowed size for the projection parameters
-		float aspectRatio = 16.0f / 9.0f;
-		float newWidth = (m_Right - m_Left) - 2 * amount;
-		float newHeight = (m_Top - m_Bottom) - 2 * amount / aspectRatio;
-
-		if (newWidth > minZoom && newHeight > minZoom / aspectRatio) {
-			m_Left += amount;
-			m_Right -= amount;
-			m_Bottom += amount / aspectRatio;
-			m_Top -= amount / aspectRatio;
-			RecalculateProjectionMatrix();
-		}
-	}
-
-	void OrthographicCamera::ZoomOut(float amount)
-	{
-		float aspectRatio = 16.0f / 9.0f;
-		m_Left -= amount;
-		m_Right += amount;
-		m_Bottom -= amount / aspectRatio;
-		m_Top += amount / aspectRatio;
-		RecalculateProjectionMatrix();
 	}
 }

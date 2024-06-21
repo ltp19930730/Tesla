@@ -11,7 +11,7 @@ class ExampleLayer : public Tesla::Layer
 {
 public:
 	ExampleLayer()
-		: Layer("Example"), m_Camera(-1.6f, 1.6f, -0.9f, 0.9f), m_CameraPosition(0.0f)
+		: Layer("Example"), m_CameraController(1920.0f / 1080.0f)
 	{
 		m_VertexArray.reset(Tesla::VertexArray::Create());
 
@@ -149,39 +149,15 @@ public:
 
 	virtual void OnUpdate(Tesla::Timestep ts) override
 	{
-		if (Tesla::Input::IsKeyPressed(TL_KEY_LEFT))
-			m_CameraPosition.x -= m_CameraMoveSpeed * ts;
-
-		if (Tesla::Input::IsKeyPressed(TL_KEY_RIGHT))
-			m_CameraPosition.x += m_CameraMoveSpeed * ts;
-
-		if (Tesla::Input::IsKeyPressed(TL_KEY_UP))
-			m_CameraPosition.y += m_CameraMoveSpeed * ts;
-
-		if (Tesla::Input::IsKeyPressed(TL_KEY_DOWN))
-			m_CameraPosition.y -= m_CameraMoveSpeed * ts;
-
-		if (Tesla::Input::IsKeyPressed(TL_KEY_A))
-			m_CameraRotation -= m_CameraRotationSpeed * ts;
-
-		if (Tesla::Input::IsKeyPressed(TL_KEY_D))
-			m_CameraRotation += m_CameraRotationSpeed * ts;
-
-		if (Tesla::Input::IsKeyPressed(TL_KEY_Z))
-			m_Camera.ZoomIn(m_ZoomAmount * ts);
-
-		if (Tesla::Input::IsKeyPressed(TL_KEY_X))
-			m_Camera.ZoomOut(m_ZoomAmount * ts);
+		// Update
+		m_CameraController.OnUpdate(ts);
 
 		m_RotationAngle += m_RotationSpeed * ts; // Update the rotation angle
 
 		Tesla::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
 		Tesla::RenderCommand::Clear();
 
-		m_Camera.SetPosition(m_CameraPosition);
-		m_Camera.SetRotation(m_CameraRotation);
-
-		Tesla::Renderer::BeginScene(m_Camera);
+		Tesla::Renderer::BeginScene(m_CameraController.GetCamera());
 
 		glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
 		glm::mat4 rotation = glm::rotate(glm::mat4(1.0f), glm::radians(m_RotationAngle), glm::vec3(0, 1, 0)); // Rotate around X-axis
@@ -225,8 +201,9 @@ public:
 		Tesla::Renderer::EndScene();
 	}
 
-	virtual void OnEvent(Tesla::Event& event) override
+	virtual void OnEvent(Tesla::Event& e) override
 	{
+		m_CameraController.OnEvent(e);
 	}
 
 	virtual void OnImGuiRender() override
@@ -253,13 +230,7 @@ private:
 
 	Tesla::Ref<Tesla::Texture2D> m_Texture, m_BackgroundTexture;
 
-	Tesla::OrthographicCamera m_Camera;
-	glm::vec3 m_CameraPosition;
-	float m_CameraMoveSpeed = 5.0f;
-
-	float m_CameraRotation = 0.0f;
-	float m_CameraRotationSpeed = 180.0f;
-	float m_ZoomAmount = 1.0f;
+	Tesla::OrthographicCameraController m_CameraController;
 
 	glm::vec3 m_SquareColor = { 0.5f, 0.5f, 0.1f };
 
