@@ -11,7 +11,7 @@ class ExampleLayer : public Tesla::Layer
 {
 public:
 	ExampleLayer()
-		: Layer("Example"), m_CameraController(1920.0f / 1080.0f)
+		: Layer("Example"), m_CameraController(1.0f)
 	{
 		m_VertexArray.reset(Tesla::VertexArray::Create());
 
