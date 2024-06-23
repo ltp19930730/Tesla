@@ -44,7 +44,7 @@ namespace Tesla {
 			{ 
 				for (Layer* layer : m_LayerStack)
 				{
-					layer->OnUpdate(timestep);
+					layer->OnUpdate(timestep, time);
 				}
 			}
 			m_ImGuiLayer->Begin();
