@@ -75,7 +75,6 @@ project "Tesla"
         systemversion "latest"
 
         defines {
-            "TL_PLATFORM_WINDOWS",
             "TL_BUILD_DLL",
             "GLFW_INCLUDE_NONE",
         }
@@ -126,10 +125,6 @@ project "Sandbox"
 
     filter "system:windows" 
         systemversion "latest"
-
-        defines {
-            "TL_PLATFORM_WINDOWS",
-        }
 
     filter "configurations:Debug"
         defines "TL_DEBUG"

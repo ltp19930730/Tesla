@@ -11,7 +11,7 @@ class ExampleLayer : public Tesla::Layer
 {
 public:
 	ExampleLayer()
-		: Layer("Example"), m_CameraController(1.0f)
+		: Layer("Example"), m_CameraController(1.0f, true)
 	{
 		m_VertexArray.reset(Tesla::VertexArray::Create());
 
@@ -117,13 +117,13 @@ public:
 
 		Tesla::Renderer::BeginScene(m_CameraController.GetCamera());
 
-		/*
+		
 		glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
 		glm::mat4 rotation = glm::rotate(glm::mat4(1.0f), glm::radians(m_RotationAngle), glm::vec3(0, 1, 0)); // Rotate around X-axis
 
 
 		std::dynamic_pointer_cast<Tesla::OpenGLShader>(m_FlatColorShader)->Bind();
-		std::dynamic_pointer_cast<Tesla::OpenGLShader>(m_FlatColorShader)->UploadUniformFloat3("u_Color", m_SquareColor);
+		//std::dynamic_pointer_cast<Tesla::OpenGLShader>(m_FlatColorShader)->UploadUniformFloat3("u_Color", m_SquareColor);
 
 		
 		glm::vec3 center(0.0f, 0.0f, 0.0f); // Center of the heart shape
@@ -150,10 +150,12 @@ public:
 				}
 			}
 		}
-		*/
+		
 
-		// Cube
-		//glm::mat4 transform = glm::rotate(glm::mat4(1.0f), glm::radians(m_RotationAngle), glm::vec3(1, 1, 0)) * scale; // Rotate around an arbitrary axis
+		/*
+		* Custom shader playground
+		*/
+		/*
 		std::dynamic_pointer_cast<Tesla::OpenGLShader>(m_Shader)->Bind();
 		std::dynamic_pointer_cast<Tesla::OpenGLShader>(m_Shader)->UploadUniformFloat3("iResolution", glm::vec3(1280.0f, 720.0f, 1.0f));
 		std::dynamic_pointer_cast<Tesla::OpenGLShader>(m_Shader)->UploadUniformFloat("iTime", time);
@@ -161,6 +163,7 @@ public:
 		std::dynamic_pointer_cast<Tesla::OpenGLShader>(m_Shader)->UploadUniformFloat3("color2", m_Color2);
 
 		Tesla::Renderer::Submit(m_Shader, m_VertexArray);
+		*/
 
 		Tesla::Renderer::EndScene();
 	}

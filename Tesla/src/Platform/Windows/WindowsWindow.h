@@ -41,9 +41,7 @@ namespace Tesla {
 		};
 
 		WindowData m_Data;
-		GraphicsContext* m_Context;
-
-
+		Scope<GraphicsContext> m_Context;
 	};
 }
 
