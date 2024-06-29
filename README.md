@@ -1,5 +1,5 @@
 # Tesla Game Engine
-Self learning project for understanding graphic API (OpenGL or Valkan) and the most important game engine part!
+Self learning project for understanding graphic API (OpenGL or Valkan) and the most important game engine!
 
 ### Implementation
 * Render
