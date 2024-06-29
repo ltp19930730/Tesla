@@ -33,10 +33,6 @@
 
 #include "Tesla/Renderer/OrthographicCamera.h"
 
-// ---- Entry point -----
-
-#include "Tesla/Core/EntryPoint.h"
-
 // ----- Include pch header ------
 
 #include "tlpch.h"

@@ -1,11 +1,14 @@
 #include <tlpch.h>
 #include <Tesla.h>
+#include <Tesla/Core/EntryPoint.h>
 
 #include "imgui/imgui.h"
 #include "Platform/OpenGL/OpenGLShader.h"
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include "Sandbox2D.h"
+#include "SandboxShader.h"
 
 class ExampleLayer : public Tesla::Layer
 {
@@ -13,37 +16,7 @@ public:
 	ExampleLayer()
 		: Layer("Example"), m_CameraController(1.0f, true)
 	{
-		m_VertexArray.reset(Tesla::VertexArray::Create());
-
-		Tesla::Ref<Tesla::VertexBuffer> vertexBuffer;
-
-		// Create vertext buffer
-		float vertices[] = {
-			-1.0f, -1.0f, 0.0f,
-			 1.0f, -1.0f, 0.0f,
-			 1.0f,  1.0f, 0.0f,
-			-1.0f,  1.0f, 0.0f
-		};
-		vertexBuffer.reset(Tesla::VertexBuffer::Create(vertices, sizeof(vertices)));
-
-		Tesla::BufferLayout layout = {
-			{ Tesla::ShaderDataType::Float3, "a_Position" }
-		};
-
-		vertexBuffer->SetLayout(layout);
-
-		m_VertexArray->AddVertexBuffer(vertexBuffer);
-
-		// Create index buffer
-		uint32_t indices[] = {
-			0, 1, 2,
-			2, 3, 0
-		};
-		Tesla::Ref<Tesla::IndexBuffer> indexBuffer;
-		indexBuffer.reset(Tesla::IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
-		m_VertexArray->SetIndexBuffer(indexBuffer);
-
-		m_SquareVA.reset(Tesla::VertexArray::Create());
+		m_SquareVA = Tesla::VertexArray::Create();
 
 		float squareVertices[5 * 4] = {
 			-0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
@@ -64,8 +37,6 @@ public:
 		Tesla::Ref<Tesla::IndexBuffer> squareIB;
 		squareIB.reset(Tesla::IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t)));
 		m_SquareVA->SetIndexBuffer(squareIB);
-
-		m_Shader = m_ShaderLibrary.Load("assets/shaders/Magic.glsl");
 
 		std::string flatColorShaderVertexSrc = R"(
 			#version 330 core
@@ -150,20 +121,7 @@ public:
 				}
 			}
 		}
-		
 
-		/*
-		* Custom shader playground
-		*/
-		/*
-		std::dynamic_pointer_cast<Tesla::OpenGLShader>(m_Shader)->Bind();
-		std::dynamic_pointer_cast<Tesla::OpenGLShader>(m_Shader)->UploadUniformFloat3("iResolution", glm::vec3(1280.0f, 720.0f, 1.0f));
-		std::dynamic_pointer_cast<Tesla::OpenGLShader>(m_Shader)->UploadUniformFloat("iTime", time);
-		std::dynamic_pointer_cast<Tesla::OpenGLShader>(m_Shader)->UploadUniformFloat3("color1", m_Color1);
-		std::dynamic_pointer_cast<Tesla::OpenGLShader>(m_Shader)->UploadUniformFloat3("color2", m_Color2);
-
-		Tesla::Renderer::Submit(m_Shader, m_VertexArray);
-		*/
 
 		Tesla::Renderer::EndScene();
 	}
@@ -190,8 +148,6 @@ private:
 	}
 
 	Tesla::ShaderLibrary m_ShaderLibrary;
-	Tesla::Ref<Tesla::VertexArray> m_VertexArray;
-	Tesla::Ref<Tesla::Shader> m_Shader;
 
 	Tesla::Ref<Tesla::Shader> m_FlatColorShader;
 	Tesla::Ref<Tesla::VertexArray> m_SquareVA;
@@ -213,7 +169,9 @@ class Sandbox : public Tesla::Application
 public:
 	Sandbox()
 	{
-		PushLayer(new ExampleLayer());
+		//PushLayer(new ExampleLayer());
+		//PushLayer(new Sandbox2D());
+		PushLayer(new SandboxShader());
 	}
 
 	~Sandbox()
