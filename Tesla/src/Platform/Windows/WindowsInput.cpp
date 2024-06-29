@@ -1,6 +1,6 @@
 #include "tlpch.h"
 #include "WindowsInput.h"
-#include "Tesla/Application.h"
+#include "Tesla/Core/Application.h"
 
 #include <GLFW/glfw3.h>
 

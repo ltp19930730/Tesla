@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "Tesla/Core.h"
+#include "Tesla/Core/Core.h"
 
 namespace Tesla {
 	class Texture

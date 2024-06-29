@@ -1,5 +1,5 @@
 #pragma once
-#include "Tesla/Input.h"
+#include "Tesla/Core/Input.h"
 
 namespace Tesla {
 

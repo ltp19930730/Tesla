@@ -2,23 +2,23 @@
 
 // For used by Tesla applications
 
-#include "Tesla/Application.h"
+#include "Tesla/Core/Application.h"
 
 // ----- Layer -------
 
-#include "Tesla/Layer.h"
+#include "Tesla/Core/Layer.h"
 
 // ----- Logger -------
 
-#include "Tesla/Log.h"
+#include "Tesla/Core/Log.h"
 
 #include "Tesla/Core/Timestep.h"
 
 // ----- Input -------
-#include "Tesla/Input.h"
-#include "Tesla/KeyCodes.h"
-#include "Tesla/MouseButtonCodes.h"
-#include "Tesla/OrthographicCameraController.h"
+#include "Tesla/Core/Input.h"
+#include "Tesla/Core/KeyCodes.h"
+#include "Tesla/Core/MouseButtonCodes.h"
+#include "Tesla/Renderer/OrthographicCameraController.h"
 
 #include "Tesla/ImGui/ImGuiLayer.h"
 
@@ -35,7 +35,7 @@
 
 // ---- Entry point -----
 
-#include "Tesla/EntryPoint.h"
+#include "Tesla/Core/EntryPoint.h"
 
 // ----- Include pch header ------
 

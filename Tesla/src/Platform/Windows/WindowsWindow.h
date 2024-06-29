@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Tesla/Window.h"
+#include "Tesla/Core/Window.h"
 #include "Tesla/Renderer/GraphicsContext.h"
 
 #include <GLFW/glfw3.h>

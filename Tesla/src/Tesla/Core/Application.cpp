@@ -1,7 +1,7 @@
 #include "tlpch.h"
 #include "Application.h"
 
-#include "Tesla/Log.h"
+#include "Tesla/Core/Log.h"
 #include "Tesla/Renderer/Renderer.h"
 
 #include <glad/glad.h>

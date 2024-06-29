@@ -2,7 +2,7 @@
 
 #include "tlpch.h"
 
-#include "Tesla/Core.h"
+#include "Tesla/Core/Core.h"
 #include "Tesla/Events/Event.h"
 
 namespace Tesla {

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Tesla/Core.h"
+#include "Tesla/Core/Core.h"
 #include "tlpch.h"
 
 namespace Tesla {

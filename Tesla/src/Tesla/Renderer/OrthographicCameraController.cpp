@@ -1,8 +1,8 @@
 #include "tlpch.h"
 #include "OrthographicCameraController.h"
 
-#include "Tesla/Input.h"
-#include "Tesla/KeyCodes.h"
+#include "Tesla/Core/Input.h"
+#include "Tesla/Core/KeyCodes.h"
 
 
 namespace Tesla {
