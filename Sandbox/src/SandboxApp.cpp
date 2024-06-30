@@ -26,7 +26,7 @@ public:
 		};
 
 		Tesla::Ref<Tesla::VertexBuffer> squareVB;
-		squareVB.reset(Tesla::VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
+		squareVB = Tesla::VertexBuffer::Create(squareVertices, sizeof(squareVertices));
 		squareVB->SetLayout({
 			{ Tesla::ShaderDataType::Float3, "a_Position" },
 			{ Tesla::ShaderDataType::Float2, "a_TexCoord" }
@@ -35,7 +35,7 @@ public:
 
 		uint32_t squareIndices[6] = { 0, 1, 2, 2, 3, 0 };
 		Tesla::Ref<Tesla::IndexBuffer> squareIB;
-		squareIB.reset(Tesla::IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t)));
+		squareIB = Tesla::IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t));
 		m_SquareVA->SetIndexBuffer(squareIB);
 
 		std::string flatColorShaderVertexSrc = R"(
@@ -170,8 +170,8 @@ public:
 	Sandbox()
 	{
 		//PushLayer(new ExampleLayer());
-		//PushLayer(new Sandbox2D());
-		PushLayer(new SandboxShader());
+		PushLayer(new Sandbox2D());
+		//PushLayer(new SandboxShader());
 	}
 
 	~Sandbox()

@@ -25,6 +25,7 @@
 // ----- Rendering -------
 #include "Tesla/Renderer/RenderCommand.h"
 #include "Tesla/Renderer/Renderer.h"
+#include "Tesla/Renderer/Renderer2D.h"
 
 #include "Tesla/Renderer/Buffer.h"
 #include "Tesla/Renderer/VertexArray.h"

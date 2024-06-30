@@ -23,7 +23,7 @@ void SandboxShader::OnAttach()
 		-1.0f,  1.0f, 0.0f
 	};
 	Tesla::Ref<Tesla::VertexBuffer> vertexBuffer;
-	vertexBuffer.reset(Tesla::VertexBuffer::Create(vertices, sizeof(vertices)));
+	vertexBuffer = Tesla::VertexBuffer::Create(vertices, sizeof(vertices));
 	Tesla::BufferLayout layout = {
 		{ Tesla::ShaderDataType::Float3, "a_Position" }
 	};
@@ -36,7 +36,7 @@ void SandboxShader::OnAttach()
 		2, 3, 0
 	};
 	Tesla::Ref<Tesla::IndexBuffer> indexBuffer;
-	indexBuffer.reset(Tesla::IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
+	indexBuffer = Tesla::IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t));
 	m_VertexArray->SetIndexBuffer(indexBuffer);
 
 	// Shader

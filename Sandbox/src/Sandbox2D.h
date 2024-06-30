@@ -17,10 +17,6 @@ public:
 private:
 	Tesla::OrthographicCameraController m_CameraController;
 
-	// Temp
-	Tesla::Ref<Tesla::VertexArray> m_SquareVA;
-	Tesla::Ref<Tesla::Shader> m_FlatColorShader;
-
 	glm::vec4 m_SquareColor = { 0.2f, 0.3f, 0.8f, 1.0f };
 };
 
