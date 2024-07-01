@@ -1,18 +1,13 @@
 #include "tlpch.h"
-#include "Application.h"
-
+#include "Tesla/Core/Application.h"
+#include "Tesla/Core/Input.h"
 #include "Tesla/Core/Log.h"
 #include "Tesla/Renderer/Renderer.h"
 
 #include <glad/glad.h>
-
-#include "Input.h"
-
 #include <glfw/glfw3.h>
 
 namespace Tesla {
-
-#define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
 
     Application* Application::s_Instance = nullptr;
 
@@ -21,7 +16,7 @@ namespace Tesla {
 		TL_CORE_ASSERT(!s_Instance, "Application already exists!")
 		s_Instance = this;
 		m_Window = std::unique_ptr<Window>(Window::Create());
-		m_Window->SetEventCallback(BIND_EVENT_FN(OnEvent));
+		m_Window->SetEventCallback(TL_BIND_EVENT_FN(Application::OnEvent));
 
 		Renderer::Init();
 
@@ -31,6 +26,7 @@ namespace Tesla {
 
 	Application::~Application()
 	{
+		Renderer::Shutdown();
 	}
 
 	void Application::Run()
@@ -59,8 +55,8 @@ namespace Tesla {
 	void Application::OnEvent(Event& e)
 	{
 		EventDispatcher dispatcher(e);
-		dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(OnWindowClose));
-		dispatcher.Dispatch<WindowResizeEvent>(BIND_EVENT_FN(OnWindowResize));
+		dispatcher.Dispatch<WindowCloseEvent>(TL_BIND_EVENT_FN(Application::OnWindowClose));
+		dispatcher.Dispatch<WindowResizeEvent>(TL_BIND_EVENT_FN(Application::OnWindowResize));
 
 		for (auto it = m_LayerStack.end(); it != m_LayerStack.begin(); )
 		{

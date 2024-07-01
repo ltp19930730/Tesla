@@ -1,17 +1,17 @@
 #include "tlpch.h"
-#include "Tesla/Renderer/VertexArray.h"
+#include "Tesla/Renderer/GraphicsContext.h"
 
 #include "Tesla/Renderer/Renderer.h"
-#include "Platform/OpenGL/OpenGLVertexArray.h"
+#include "Platform/OpenGL/OpenGLContext.h"
 
 namespace Tesla {
 
-	Ref<VertexArray> VertexArray::Create()
+	Scope<GraphicsContext> GraphicsContext::Create(void* window)
 	{
 		switch (Renderer::GetAPI())
 		{
 		case RendererAPI::API::None:    TL_CORE_ASSERT(false, "RendererAPI::None is currently not supported!"); return nullptr;
-		case RendererAPI::API::OpenGL:  return CreateRef<OpenGLVertexArray>();
+		case RendererAPI::API::OpenGL:  return CreateScope<OpenGLContext>(static_cast<GLFWwindow*>(window));
 		}
 
 		TL_CORE_ASSERT(false, "Unknown RendererAPI!");

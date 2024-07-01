@@ -1,8 +1,6 @@
 #include "tlpch.h"
-#include "Texture.h"
-
-
-#include "Renderer.h"
+#include "Tesla/Renderer/Texture.h"
+#include "Tesla/Renderer/Renderer.h"
 #include "Platform/OpenGL/OpenGLTexture.h"
 
 namespace Tesla

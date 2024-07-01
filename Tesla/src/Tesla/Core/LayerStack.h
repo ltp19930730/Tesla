@@ -1,13 +1,13 @@
 #pragma once
 
 #include "Tesla/Core/Core.h"
-#include "Layer.h"
+#include "Tesla/Core/Layer.h"
 
 namespace Tesla {
-	class TL_API LayerStack
+	class LayerStack
 	{
 	public:
-		LayerStack();
+		LayerStack() = default;
 		~LayerStack();
 
 		void PushLayer(Layer* layer);

@@ -1,8 +1,7 @@
 #include "tlpch.h"
-#include "LayerStack.h"
+#include "Tesla/Core/LayerStack.h"
 
 namespace Tesla {
-	LayerStack::LayerStack() {}
 
 	LayerStack::~LayerStack()
 	{

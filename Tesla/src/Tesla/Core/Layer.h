@@ -6,7 +6,7 @@
 #include "Tesla/Events/Event.h"
 
 namespace Tesla {
-	class TL_API Layer
+	class Layer
 	{
 	public:
 		Layer(const std::string& name = "Layer");

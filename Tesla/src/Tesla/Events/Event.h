@@ -1,5 +1,7 @@
 #pragma once
 
+#include "tlpch.h"
+
 #include "Tesla/Core/Core.h"
 
 namespace Tesla {
@@ -35,7 +37,7 @@ namespace Tesla {
 
 #define EVENT_CLASS_CATEGORY(category) virtual int GetCategoryFlags() const override { return category; }
 
-	class TL_API Event
+	class Event
 	{
 		friend class EventDispatcher;
 	public:

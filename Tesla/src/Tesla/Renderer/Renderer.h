@@ -1,9 +1,9 @@
 #pragma once
 
-#include "RenderCommand.h"
+#include "Tesla/Renderer/RenderCommand.h"
 
-#include "OrthographicCamera.h"
-#include "Shader.h"
+#include "Tesla/Renderer/OrthographicCamera.h"
+#include "Tesla/Renderer/Shader.h"
 
 namespace Tesla {
 
@@ -11,6 +11,7 @@ namespace Tesla {
 	{
 	public:
 		static void Init();
+		static void Shutdown();
 		static void OnWindowResize(uint32_t width, uint32_t height);
 
 		static void BeginScene(OrthographicCamera& camera);

@@ -1,5 +1,5 @@
 #include "tlpch.h"
-#include "OrthographicCamera.h"
+#include "Tesla/Renderer/OrthographicCamera.h"
 
 #include <glm/gtc/matrix_transform.hpp>
 

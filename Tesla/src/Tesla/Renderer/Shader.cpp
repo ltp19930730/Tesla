@@ -1,7 +1,6 @@
 #include "tlpch.h"
-#include "Shader.h"
-
-#include "Renderer.h"
+#include "Tesla/Renderer/Shader.h"
+#include "Tesla/Renderer/Renderer.h"
 #include "Platform/OpenGL/OpenGLShader.h"
 
 namespace Tesla {
@@ -10,7 +9,7 @@ namespace Tesla {
 		switch (Renderer::GetAPI())
 		{
 			case RendererAPI::API::None:    TL_CORE_ASSERT(false, "RendererAPI::None is currently not supported!"); return nullptr;
-			case RendererAPI::API::OpenGL:  return std::make_shared<OpenGLShader>(filepath);
+			case RendererAPI::API::OpenGL:  return CreateRef<OpenGLShader>(filepath);
 		}
 
 		TL_CORE_ASSERT(false, "Unknown RendererAPI!");
@@ -22,7 +21,7 @@ namespace Tesla {
 		switch (Renderer::GetAPI())
 		{
 			case RendererAPI::API::None:    TL_CORE_ASSERT(false, "RendererAPI::None is currently not supported!"); return nullptr;
-			case RendererAPI::API::OpenGL:  return std::make_shared<OpenGLShader>(name, vertexSrc, fragmentSrc);
+			case RendererAPI::API::OpenGL:  return CreateRef<OpenGLShader>(name, vertexSrc, fragmentSrc);
 		}
 		TL_CORE_ASSERT(false, "Unknown RendererAPI!");
 		return nullptr;

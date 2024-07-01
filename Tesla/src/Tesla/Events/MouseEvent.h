@@ -1,11 +1,11 @@
 #pragma once
-
-#include "Event.h"
 #include "tlpch.h"
+
+#include "Tesla/Events/Event.h"
 
 namespace Tesla {
 
-	class TL_API MouseMovedEvent : public Event
+	class MouseMovedEvent : public Event
 	{
 	public:
 		MouseMovedEvent(float x, float y)
@@ -27,7 +27,7 @@ namespace Tesla {
 		float m_MouseX, m_MouseY;
 	};
 
-	class TL_API MouseScrolledEvent : public Event
+	class MouseScrolledEvent : public Event
 	{
 	public:
 		MouseScrolledEvent(float xOffset, float yOffset)
@@ -50,7 +50,7 @@ namespace Tesla {
 		float m_XOffset, m_YOffset;
 	};
 
-	class TL_API MouseButtonEvent : public Event
+	class MouseButtonEvent : public Event
 	{
 	public:
 		inline int GetMouseButton() const { return m_Button; }
@@ -63,7 +63,7 @@ namespace Tesla {
 		int m_Button;
 	};
 
-	class TL_API MouseButtonPressedEvent : public MouseButtonEvent
+	class MouseButtonPressedEvent : public MouseButtonEvent
 	{
 	public:
 		MouseButtonPressedEvent(int button)
@@ -79,7 +79,7 @@ namespace Tesla {
 		EVENT_CLASS_TYPE(MouseButtonPressed)
 	};
 
-	class TL_API MouseButtonReleasedEvent : public MouseButtonEvent
+	class MouseButtonReleasedEvent : public MouseButtonEvent
 	{
 	public:
 		MouseButtonReleasedEvent(int button)

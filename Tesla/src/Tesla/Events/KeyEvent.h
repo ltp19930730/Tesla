@@ -1,9 +1,9 @@
 #pragma once
 
-#include "Event.h"
+#include "Tesla/Events/Event.h"
 
 namespace Tesla {
-	class TL_API KeyEvent : public Event
+	class KeyEvent : public Event
 	{
 	public:
 		inline int GetKeyCode() const { return m_KeyCode; }
@@ -14,7 +14,7 @@ namespace Tesla {
 		int m_KeyCode;
 	};
 
-	class TL_API KeyPressedEvent : public KeyEvent
+	class KeyPressedEvent : public KeyEvent
 	{
 	public:
 		KeyPressedEvent(int keycode, int repeatCount)
@@ -34,7 +34,7 @@ namespace Tesla {
 		int m_RepeatCount;
 	};
 
-	class TL_API KeyReleasedEvent : public KeyEvent
+	class KeyReleasedEvent : public KeyEvent
 	{
 	public:
 		KeyReleasedEvent(int keycode)
@@ -50,7 +50,7 @@ namespace Tesla {
 		EVENT_CLASS_TYPE(KeyReleased)
 	};
 
-	class TL_API KeyTypedEvent : public KeyEvent
+	class KeyTypedEvent : public KeyEvent
 	{
 	public:
 		KeyTypedEvent(int keycode)

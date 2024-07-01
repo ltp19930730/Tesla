@@ -1,19 +1,16 @@
 #pragma once
 
-#include "Core.h"
-
-#include "Window.h"
+#include "Tesla/Core/Core.h"
+#include "Tesla/Core/Window.h"
 #include "Tesla/Events/ApplicationEvent.h"
 #include "Tesla/Events/Event.h"
 #include "Tesla/Core/LayerStack.h"
-
 #include "Tesla/Core/Timestep.h"
-
 #include "Tesla/ImGui/ImGuiLayer.h"
 
 
 namespace Tesla {
-	class TL_API Application
+	class Application
 	{
 	public:
 		Application();

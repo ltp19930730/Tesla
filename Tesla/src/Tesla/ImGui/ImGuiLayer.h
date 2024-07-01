@@ -6,7 +6,7 @@
 #include "Tesla/Events/ApplicationEvent.h"
 
 namespace Tesla {
-	class TL_API ImGuiLayer : public Layer
+	class ImGuiLayer : public Layer
 	{
 	public:
 		ImGuiLayer();

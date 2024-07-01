@@ -1,7 +1,7 @@
 #include "tlpch.h"
-#include "OpenGLTexture.h"
+#include "Platform/OpenGL/OpenGLTexture.h"
 
-#include "stb_image.h"
+#include <stb_image.h>
 
 namespace Tesla {
 	OpenGLTexture2D::OpenGLTexture2D(uint32_t width, uint32_t height)

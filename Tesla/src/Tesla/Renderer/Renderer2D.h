@@ -1,7 +1,7 @@
 #pragma once
 
-#include "OrthographicCamera.h"
-#include "Texture.h"
+#include "Tesla/Renderer/OrthographicCamera.h"
+#include "Tesla/Renderer/Texture.h"
 
 namespace Tesla {
 

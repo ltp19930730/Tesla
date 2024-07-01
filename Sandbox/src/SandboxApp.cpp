@@ -2,8 +2,8 @@
 #include <Tesla.h>
 #include <Tesla/Core/EntryPoint.h>
 
-#include "imgui/imgui.h"
-#include "Platform/OpenGL/OpenGLShader.h"
+#include <imgui/imgui.h>
+
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
@@ -72,8 +72,8 @@ public:
 		auto textureShader = m_ShaderLibrary.Load("assets/shaders/Texture.glsl");
 	
 
-		std::dynamic_pointer_cast<Tesla::OpenGLShader>(textureShader)->Bind();
-		std::dynamic_pointer_cast<Tesla::OpenGLShader>(textureShader)->UploadUniformInt("u_Texture", 0);
+		textureShader->Bind();
+		textureShader->SetInt("u_Texture", 0);
 	}
 
 	virtual void OnUpdate(Tesla::Timestep ts, float time) override
@@ -93,8 +93,8 @@ public:
 		glm::mat4 rotation = glm::rotate(glm::mat4(1.0f), glm::radians(m_RotationAngle), glm::vec3(0, 1, 0)); // Rotate around X-axis
 
 
-		std::dynamic_pointer_cast<Tesla::OpenGLShader>(m_FlatColorShader)->Bind();
-		//std::dynamic_pointer_cast<Tesla::OpenGLShader>(m_FlatColorShader)->UploadUniformFloat3("u_Color", m_SquareColor);
+		m_FlatColorShader->Bind();
+		//m_FlatColorShader->SetFloat3("u_Color", m_SquareColor);
 
 		
 		glm::vec3 center(0.0f, 0.0f, 0.0f); // Center of the heart shape

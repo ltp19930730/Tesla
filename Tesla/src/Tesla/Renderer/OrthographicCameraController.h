@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include "Tesla/Renderer/OrthographicCamera.h"
 #include "Tesla/Core/Timestep.h"
 

@@ -39,21 +39,6 @@
 	#error "Unknown platform!"
 #endif // End of platform detection
 
-// DLL support
-#ifdef TL_PLATFORM_WINDOWS
-	#if TL_DYNAMIC_LINK
-		#ifdef TL_BUILD_DLL
-			#define TL_API __declspec(dllexport)
-		#else
-			#define TL_API __declspec(dllimport)
-		#endif
-	#else
-		#define TL_API
-	#endif
-#else
-	#error Tesla only supports Windows!
-#endif // End of DLL support
-
 #ifdef TL_DEBUG
 #define TL_ENABLE_ASSERTS
 #endif

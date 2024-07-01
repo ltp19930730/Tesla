@@ -1,7 +1,6 @@
 #include "tlpch.h"
-#include "Buffer.h"
-
-#include "Renderer.h"
+#include "Tesla/Renderer/Buffer.h"
+#include "Tesla/Renderer/Renderer.h"
 #include "Platform/OpenGL/OpenGLBuffer.h"
 
 namespace Tesla
@@ -11,7 +10,7 @@ namespace Tesla
 		switch (Renderer::GetAPI())
 		{
 		case RendererAPI::API::None:    TL_CORE_ASSERT(false, "RendererAPI::None is currently not supported!"); return nullptr;
-		case RendererAPI::API::OpenGL:  return std::make_shared<OpenGLVertexBuffer>(vertices, size);
+		case RendererAPI::API::OpenGL:  return CreateRef<OpenGLVertexBuffer>(vertices, size);
 		}
 
 		TL_CORE_ASSERT(false, "Unknown RendererAPI!");
@@ -23,7 +22,7 @@ namespace Tesla
 		switch (Renderer::GetAPI())
 		{
 		case RendererAPI::API::None:    TL_CORE_ASSERT(false, "RendererAPI::None is currently not supported!"); return nullptr;
-		case RendererAPI::API::OpenGL:  return std::make_shared<OpenGLIndexBuffer>(indices, size);
+		case RendererAPI::API::OpenGL:  return CreateRef<OpenGLIndexBuffer>(indices, size);
 		}
 
 		TL_CORE_ASSERT(false, "Unknown RendererAPI!");

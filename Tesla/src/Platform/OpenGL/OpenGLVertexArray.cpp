@@ -1,5 +1,5 @@
 #include "tlpch.h"
-#include "OpenGLVertexArray.h"
+#include "Platform/OpenGL/OpenGLVertexArray.h"
 
 #include <glad/glad.h>
 
@@ -9,17 +9,17 @@ namespace  Tesla {
 	{
 		switch (type)
 		{
-		case Tesla::ShaderDataType::Float:    return GL_FLOAT;
-		case Tesla::ShaderDataType::Float2:   return GL_FLOAT;
-		case Tesla::ShaderDataType::Float3:   return GL_FLOAT;
-		case Tesla::ShaderDataType::Float4:   return GL_FLOAT;
-		case Tesla::ShaderDataType::Mat3:     return GL_FLOAT;
-		case Tesla::ShaderDataType::Mat4:     return GL_FLOAT;
-		case Tesla::ShaderDataType::Int:      return GL_INT;
-		case Tesla::ShaderDataType::Int2:     return GL_INT;
-		case Tesla::ShaderDataType::Int3:     return GL_INT;
-		case Tesla::ShaderDataType::Int4:     return GL_INT;
-		case Tesla::ShaderDataType::Bool:     return GL_BOOL;
+		case ShaderDataType::Float:    return GL_FLOAT;
+		case ShaderDataType::Float2:   return GL_FLOAT;
+		case ShaderDataType::Float3:   return GL_FLOAT;
+		case ShaderDataType::Float4:   return GL_FLOAT;
+		case ShaderDataType::Mat3:     return GL_FLOAT;
+		case ShaderDataType::Mat4:     return GL_FLOAT;
+		case ShaderDataType::Int:      return GL_INT;
+		case ShaderDataType::Int2:     return GL_INT;
+		case ShaderDataType::Int3:     return GL_INT;
+		case ShaderDataType::Int4:     return GL_INT;
+		case ShaderDataType::Bool:     return GL_BOOL;
 		}
 
 		TL_CORE_ASSERT(false, "Unknown ShaderDataType!");

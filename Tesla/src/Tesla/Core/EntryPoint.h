@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Tesla/Core/Core.h"
+
 #ifdef TL_PLATFORM_WINDOWS
 
 extern Tesla::Application* Tesla::CreateApplication();
