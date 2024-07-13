@@ -17,6 +17,7 @@
 #include <utility>
 
 #include "Tesla/Core/Log.h"
+#include "Tesla/Debug/Instrumentor.h"
 
 #ifdef TL_PLATFORM_WINDOWS
 #include <Windows.h>
