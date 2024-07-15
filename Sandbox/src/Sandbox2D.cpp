@@ -11,21 +11,22 @@ Sandbox2D::Sandbox2D()
 
 void Sandbox2D::OnAttach()
 {
+	TL_PROFILE_FUNCTION();
+
 	m_CheckerboardTexture = Tesla::Texture2D::Create("assets/textures/Checkerboard.png");
 }
 
 void Sandbox2D::OnDetach()
 {
+	TL_PROFILE_FUNCTION();
 }
 
 void Sandbox2D::OnUpdate(Tesla::Timestep ts, float time)
 {
-	TL_PROFILE_FUNCTION("Sandbox2D::OnUpdate");
+	TL_PROFILE_FUNCTION();
 	// Update
-	{
-		TL_PROFILE_SCOPE("CameraController::OnUpdate");
-		m_CameraController.OnUpdate(ts);
-	}
+	m_CameraController.OnUpdate(ts);
+
 
 	// Render
 	{
@@ -55,5 +56,6 @@ void Sandbox2D::OnImGuiRender()
 
 void Sandbox2D::OnEvent(Tesla::Event& e)
 {
+	TL_PROFILE_FUNCTION();
 	m_CameraController.OnEvent(e);
 }
