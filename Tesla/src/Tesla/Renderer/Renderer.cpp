@@ -8,6 +8,8 @@ namespace Tesla {
 
 	void Renderer::Init()
 	{
+		TL_PROFILE_FUNCTION();
+
 		RenderCommand::Init();
 		Renderer2D::Init();
 	}

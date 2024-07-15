@@ -22,6 +22,8 @@ namespace Tesla {
 
 	void ImGuiLayer::OnAttach()
 	{
+		TL_PROFILE_FUNCTION();
+
 		// Setup Dear ImGui context
 		IMGUI_CHECKVERSION();
 		ImGui::CreateContext();
@@ -51,6 +53,8 @@ namespace Tesla {
 
 	void ImGuiLayer::OnDetach()
 	{
+		TL_PROFILE_FUNCTION();
+
 		ImGui_ImplOpenGL3_Shutdown();
 		ImGui_ImplGlfw_Shutdown();
 		ImGui::DestroyContext();
@@ -58,6 +62,8 @@ namespace Tesla {
 
 	void ImGuiLayer::Begin()
 	{
+		TL_PROFILE_FUNCTION();
+
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
@@ -65,6 +71,8 @@ namespace Tesla {
 
 	void ImGuiLayer::End()
 	{
+		TL_PROFILE_FUNCTION();
+
 		ImGuiIO& io = ImGui::GetIO();
 		Application& app = Application::Get();
 		io.DisplaySize = ImVec2((float)app.GetWindow().GetWidth(), (float)app.GetWindow().GetHeight());

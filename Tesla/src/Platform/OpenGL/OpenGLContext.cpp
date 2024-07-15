@@ -13,6 +13,8 @@ namespace Tesla {
 
 	void OpenGLContext::Init()
 	{
+		TL_PROFILE_FUNCTION();
+
 		glfwMakeContextCurrent(m_WindowHandle);
 		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 		TL_CORE_ASSERT(status, "Failed to initialize Glad!")
@@ -34,6 +36,8 @@ namespace Tesla {
 
 	void OpenGLContext::SwapBuffers()
 	{
+		TL_PROFILE_FUNCTION();
+
 		glfwSwapBuffers(m_WindowHandle);
 	}
 }
