@@ -4,6 +4,7 @@
 #include "Tesla/Events/ApplicationEvent.h"
 #include "Tesla/Events/KeyEvent.h"
 #include "Tesla/Events/MouseEvent.h"
+#include "Tesla/Renderer/Renderer.h"
 #include "Platform/OpenGL/OpenGLContext.h"
 
 namespace Tesla {
@@ -50,6 +51,10 @@ namespace Tesla {
 
 		{
 			TL_PROFILE_SCOPE("glfwCreateWindow");
+#if defined(TL_DEBUG)
+			if (Renderer::GetAPI() == RendererAPI::API::OpenGL)
+				glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
+#endif
 			m_Window = glfwCreateWindow((int)props.Width, (int)props.Height, m_Data.Title.c_str(), nullptr, nullptr);
 			++s_GLFWWindowCount;
 		}
