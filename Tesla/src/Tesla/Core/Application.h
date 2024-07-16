@@ -8,6 +8,7 @@
 #include "Tesla/Core/Timestep.h"
 #include "Tesla/ImGui/ImGuiLayer.h"
 
+int main(int argc, char** argv);
 
 namespace Tesla {
 	class Application
@@ -15,17 +16,14 @@ namespace Tesla {
 	public:
 		Application();
 		virtual ~Application();
-
-		void Run();
-
 		void OnEvent(Event& e);
-
 		void PushLayer(Layer* layer);
 		void PushOverlay(Layer* layer);
 
 		inline Window& GetWindow() { return *m_Window; }
 		inline static Application& Get() { return *s_Instance; }
 	private:
+		void Run();
 		bool OnWindowClose(WindowCloseEvent& e);
 		bool OnWindowResize(WindowResizeEvent& e);
 
@@ -37,6 +35,7 @@ namespace Tesla {
 		float m_LastFrameTime = 0.0f;
 
 		static Application* s_Instance;
+		friend int ::main(int argc, char** argv);
 	};
 
 	Application* CreateApplication();
