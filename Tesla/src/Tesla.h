@@ -18,7 +18,7 @@
 // ----- Input -------
 #include "Tesla/Core/Input.h"
 #include "Tesla/Core/KeyCodes.h"
-#include "Tesla/Core/MouseButtonCodes.h"
+#include "Tesla/Core/MouseCodes.h"
 #include "Tesla/Renderer/OrthographicCameraController.h"
 
 #include "Tesla/ImGui/ImGuiLayer.h"
