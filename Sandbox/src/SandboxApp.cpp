@@ -5,6 +5,7 @@
 #include "Sandbox2D.h"
 #include "SandboxShader.h"
 #include "ExampleLayer.h"
+#include "GameLayer.h"
 
 
 class Sandbox : public Tesla::Application
@@ -13,8 +14,9 @@ public:
 	Sandbox()
 	{
 		//PushLayer(new ExampleLayer());
-		PushLayer(new Sandbox2D());
 		//PushLayer(new SandboxShader());
+		//PushLayer(new Sandbox2D());
+		PushLayer(new GameLayer());
 	}
 
 	~Sandbox()
