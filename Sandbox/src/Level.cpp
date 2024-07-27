@@ -117,6 +117,15 @@ void Level::OnRender()
 	}
 
 	m_Player.OnRender();
+		
+	/*
+	*
+		for (auto& points : m_Points) {
+			Renderer2D::DrawQuad(points, { 0.1f, 0.1f }, Color::Red);
+		}
+
+		m_Points.clear();
+	*/
 }
 
 void Level::CreatePillar(int index, float offset)
@@ -157,8 +166,10 @@ bool Level::CollisionTest()
 	{
 		playerTransformedVerts[i] = glm::translate(glm::mat4(1.0f), { pos.x, pos.y, 0.0f })
 			* glm::rotate(glm::mat4(1.0f), glm::radians(m_Player.GetRotation()), { 0.0f, 0.0f, 1.0f })
-			* glm::scale(glm::mat4(1.0f), { 1.0f, 1.3f, 1.0f })
+			* glm::scale(glm::mat4(1.0f), { 1.0f, 1.0f, 1.0f })
 			* playerVertices[i];
+
+		m_Points.push_back({ playerTransformedVerts[i].x, playerTransformedVerts[i].y });
 	}
 
 

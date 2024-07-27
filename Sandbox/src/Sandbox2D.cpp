@@ -38,9 +38,11 @@ void Sandbox2D::OnUpdate(Tesla::Timestep ts, float time)
 	{
 		TL_PROFILE_SCOPE("Renderer Draw");
 		Tesla::Renderer2D::BeginScene(m_CameraController.GetCamera());
-		Tesla::Renderer2D::DrawRotatedQuad({ -1.0f, 0.0f }, { 0.8f, 0.8f }, glm::radians(60.f) ,{ 0.8f, 0.2f, 0.3f, 1.0f });
+		//Tesla::Renderer2D::DrawRotatedQuad({ -1.0f, 0.0f }, { 0.8f, 0.8f }, glm::radians(60.f) ,{ 0.8f, 0.2f, 0.3f, 1.0f });
+		Tesla::Renderer2D::DrawQuad({ -1.0f, 0.0f }, { 0.8f, 0.8f }, { 0.8f, 0.2f, 0.3f, 1.0f });
 		Tesla::Renderer2D::DrawQuad({ 0.5f, -0.5f }, { 0.5f, 0.75f }, { 0.2f, 0.3f, 0.8f, 1.0f });
-		Tesla::Renderer2D::DrawRotatedQuad({ 0.0f, 0.0f, -0.1f }, { 10.0f, 10.0f }, glm::radians(45.f), m_CheckerboardTexture, 10, {1.0f, 0.9f, 0.9f, 1.0f});
+		Tesla::Renderer2D::DrawQuad({ 0.0f, 0.0f }, { 0.1f, 0.1f }, { 1.0f, 1.0f, 1.0f, 1.0f });
+		//Tesla::Renderer2D::DrawRotatedQuad({ 0.0f, 0.0f, -0.1f }, { 10.0f, 10.0f }, glm::radians(45.f), m_CheckerboardTexture, 10, {1.0f, 0.9f, 0.9f, 1.0f});
 		Tesla::Renderer2D::EndScene();
 	}
 }

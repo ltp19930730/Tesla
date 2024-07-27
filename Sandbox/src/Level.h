@@ -41,5 +41,7 @@ private:
 
 	std::vector<Pillar> m_Pillars;
 
+	std::vector<glm::vec2> m_Points;
+
 	Tesla::Ref<Tesla::Texture2D> m_TriangleTexture;
 };

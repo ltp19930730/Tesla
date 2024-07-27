@@ -7,6 +7,14 @@ namespace Tesla {
 	/////////////////////////////////////////////////////////////////////////////
 	// VertexBuffer /////////////////////////////////////////////////////////////
 	/////////////////////////////////////////////////////////////////////////////
+	OpenGLVertexBuffer::OpenGLVertexBuffer(uint32_t size)
+	{
+		TL_PROFILE_FUNCTION();
+
+		glCreateBuffers(1, &m_RendererID);
+		glNamedBufferData(m_RendererID, size, nullptr, GL_DYNAMIC_DRAW);
+	}
+
 
 	OpenGLVertexBuffer::OpenGLVertexBuffer(float* vertices, uint32_t size)
 	{
@@ -35,6 +43,11 @@ namespace Tesla {
 		TL_PROFILE_FUNCTION();
 
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
+	}
+
+	void OpenGLVertexBuffer::SetData(const void* data, uint32_t size)
+	{
+		glNamedBufferSubData(m_RendererID, 0, size, data);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////
