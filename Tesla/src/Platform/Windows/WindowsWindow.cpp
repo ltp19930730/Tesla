@@ -40,7 +40,7 @@ namespace Tesla {
 		if (s_GLFWWindowCount == 0)
 		{
 			int success = glfwInit();
-			TL_CORE_ASSERT(success, "Could not intialize GLFW!");
+			TL_CORE_ASSERT(success, "Could not initialize GLFW!");
 			glfwSetErrorCallback(GLFWErrorCallback);
 		}
 

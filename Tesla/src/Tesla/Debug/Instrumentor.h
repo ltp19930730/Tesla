@@ -156,7 +156,7 @@ namespace Tesla {
 	};
 }
 
-#define TL_PROFILE 1
+#define TL_PROFILE 0
 #if TL_PROFILE
 #define TL_PROFILE_BEGIN_SESSION(name, filepath) ::Tesla::Instrumentor::Get().BeginSession(name, filepath)
 #define TL_PROFILE_END_SESSION() ::Tesla::Instrumentor::Get().EndSession()
