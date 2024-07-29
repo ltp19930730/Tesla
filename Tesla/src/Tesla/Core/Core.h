@@ -40,12 +40,22 @@
 #endif // End of platform detection
 
 #ifdef TL_DEBUG
-#define TL_ENABLE_ASSERTS
+	#if defined(TL_PLATFORM_WINDOWS)
+		#define TL_DEBUGBREAK() __debugbreak()
+	#elif defined(TL_PLATFORM_LINUX)
+		#include <signal.h>
+		#define TL_DEBUGBREAK() raise(SIGTRAP)
+	#else
+		#error "Platform doesn't support debugbreak yet!"
+	#endif
+	#define TL_ENABLE_ASSERTS
+#else
+#define HZ_DEBUGBREAK()
 #endif
 
 #ifdef TL_ENABLE_ASSERTS
-#define TL_ASSERT(x, ...) { if(!(x)) { TL_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
-#define TL_CORE_ASSERT(x, ...) { if(!(x)) { TL_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
+#define TL_ASSERT(x, ...) { if(!(x)) { TL_ERROR("Assertion Failed: {0}", __VA_ARGS__); TL_DEBUGBREAK(); } }
+#define TL_CORE_ASSERT(x, ...) { if(!(x)) { TL_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); TL_DEBUGBREAK(); } }
 #else
 #define TL_ASSERT(x, ...)
 #define TL_CORE_ASSERT(x, ...)
