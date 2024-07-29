@@ -106,6 +106,8 @@ namespace Tesla {
 	void Renderer2D::Shutdown()
 	{
 		TL_PROFILE_FUNCTION();
+
+		delete[] s_Data.QuadVertexBufferBase;
 	}
 
 	void Renderer2D::BeginScene(const OrthographicCamera& camera)
@@ -125,7 +127,7 @@ namespace Tesla {
 	{
 		TL_PROFILE_FUNCTION();
 
-		uint32_t dataSize = (uint8_t*)s_Data.QuadVertexBufferPtr - (uint8_t*)s_Data.QuadVertexBufferBase;
+		uint32_t dataSize = (uint32_t)((uint8_t*)s_Data.QuadVertexBufferPtr - (uint8_t*)s_Data.QuadVertexBufferBase);
 		s_Data.QuadVertexBuffer->SetData(s_Data.QuadVertexBufferBase, dataSize);
 
 		Flush();
@@ -133,6 +135,9 @@ namespace Tesla {
 
 	void Renderer2D::Flush()
 	{
+		if (s_Data.QuadIndexCount == 0)
+			return; // Nothing to draw
+
 		for (uint32_t i = 0; i < s_Data.TextureSlotIndex; i++)
 			s_Data.TextureSlots[i]->Bind(i);
 
@@ -195,7 +200,6 @@ namespace Tesla {
 	{
 		TL_PROFILE_FUNCTION();
 		constexpr size_t quadVertexCount = 4;
-		constexpr glm::vec4 color = { 1.0f, 1.0f, 1.0f, 1.0f };
 		constexpr glm::vec2 textureCoords[] = { { 0.0f, 0.0f }, { 1.0f, 0.0f }, { 1.0f, 1.0f }, { 0.0f, 1.0f } };
 
 		if (s_Data.QuadIndexCount >= Renderer2DData::MaxIndices)
@@ -213,6 +217,8 @@ namespace Tesla {
 
 		if (textureIndex == 0.0f)
 		{
+			if (s_Data.TextureSlotIndex >= Renderer2DData::MaxTextureSlots)
+				FlushAndReset();
 			textureIndex = (float)s_Data.TextureSlotIndex;
 			s_Data.TextureSlots[s_Data.TextureSlotIndex] = texture;
 			s_Data.TextureSlotIndex++;
@@ -224,7 +230,7 @@ namespace Tesla {
 		for (size_t i = 0; i < quadVertexCount; i++)
 		{
 			s_Data.QuadVertexBufferPtr->Position = transform * s_Data.QuadVertexPositions[i];
-			s_Data.QuadVertexBufferPtr->Color = color;
+			s_Data.QuadVertexBufferPtr->Color = tintColor;
 			s_Data.QuadVertexBufferPtr->TexCoord = textureCoords[i];
 			s_Data.QuadVertexBufferPtr->TexIndex = textureIndex;
 			s_Data.QuadVertexBufferPtr->TilingFactor = tilingFactor;
@@ -280,7 +286,6 @@ namespace Tesla {
 		TL_PROFILE_FUNCTION();
 
 		constexpr size_t quadVertexCount = 4;
-		constexpr glm::vec4 color = { 1.0f, 1.0f, 1.0f, 1.0f };
 		constexpr glm::vec2 textureCoords[] = { { 0.0f, 0.0f }, { 1.0f, 0.0f }, { 1.0f, 1.0f }, { 0.0f, 1.0f } };
 
 		if (s_Data.QuadIndexCount >= Renderer2DData::MaxIndices)
@@ -298,6 +303,8 @@ namespace Tesla {
 
 		if (textureIndex == 0.0f)
 		{
+			if (s_Data.TextureSlotIndex >= Renderer2DData::MaxTextureSlots)
+				FlushAndReset();
 			textureIndex = (float)s_Data.TextureSlotIndex;
 			s_Data.TextureSlots[s_Data.TextureSlotIndex] = texture;
 			s_Data.TextureSlotIndex++;
@@ -310,7 +317,7 @@ namespace Tesla {
 		for (size_t i = 0; i < quadVertexCount; i++)
 		{
 			s_Data.QuadVertexBufferPtr->Position = transform * s_Data.QuadVertexPositions[i];
-			s_Data.QuadVertexBufferPtr->Color = color;
+			s_Data.QuadVertexBufferPtr->Color = tintColor;
 			s_Data.QuadVertexBufferPtr->TexCoord = textureCoords[i];
 			s_Data.QuadVertexBufferPtr->TexIndex = textureIndex;
 			s_Data.QuadVertexBufferPtr->TilingFactor = tilingFactor;

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Tesla/Core/Core.h"
+#include "Tesla/Core/Base.h"
 #include "Tesla/Core/Window.h"
 #include "Tesla/Events/ApplicationEvent.h"
 #include "Tesla/Events/Event.h"

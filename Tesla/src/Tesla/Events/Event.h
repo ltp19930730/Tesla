@@ -2,7 +2,7 @@
 
 #include "tlpch.h"
 
-#include "Tesla/Core/Core.h"
+#include "Tesla/Core/Base.h"
 
 namespace Tesla {
 	enum class EventType

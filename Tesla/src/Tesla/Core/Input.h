@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Tesla/Core/Core.h"
+#include "Tesla/Core/Base.h"
 #include "Tesla/Core/KeyCodes.h"
 #include "Tesla/Core/MouseCodes.h"
 #include "tlpch.h"

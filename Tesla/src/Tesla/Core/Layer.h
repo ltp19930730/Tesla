@@ -1,7 +1,7 @@
 #pragma once
 
 #include "tlpch.h"
-#include "Tesla/Core/Core.h"
+#include "Tesla/Core/Base.h"
 #include "Tesla/Core/Timestep.h"
 #include "Tesla/Events/Event.h"
 

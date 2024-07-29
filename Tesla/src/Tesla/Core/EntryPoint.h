@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Tesla/Core/Core.h"
+#include "Tesla/Core/Base.h"
 
 #ifdef TL_PLATFORM_WINDOWS
 

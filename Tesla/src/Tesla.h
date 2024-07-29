@@ -1,7 +1,7 @@
 #pragma once
 
 // For used by Tesla applications
-#include "Tesla/Core/Core.h"
+#include "Tesla/Core/Base.h"
 
 #include "Tesla/Core/Application.h"
 
