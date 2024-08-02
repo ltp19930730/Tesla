@@ -8,6 +8,8 @@ Self learning project for understanding graphic API (OpenGL or Valkan) and the m
   * Renderer
   * Render command
   * Shader
+  * FrameBuffer
+  * Render pass
 * Camera system
   * Move up/bottom/left/right
   * zoom in/out
