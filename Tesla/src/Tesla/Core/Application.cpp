@@ -100,6 +100,12 @@ namespace Tesla {
 		return true;
 	}
 
+	void Application::Close()
+	{
+		m_Running = false;
+	}
+
+
 	bool Application::OnWindowResize(WindowResizeEvent& e)
 	{
 		TL_PROFILE_FUNCTION();
