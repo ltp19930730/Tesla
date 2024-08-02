@@ -18,6 +18,7 @@ private:
 	Tesla::OrthographicCameraController m_CameraController;
 
 	Tesla::Ref<Tesla::Texture2D> m_CheckerboardTexture;
+	Tesla::Ref<Tesla::Framebuffer> m_Framebuffer;
 
 	glm::vec4 m_SquareColor = { 0.2f, 0.3f, 0.8f, 1.0f };
 };

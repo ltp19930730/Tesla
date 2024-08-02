@@ -31,6 +31,7 @@
 #include "Tesla/Renderer/Buffer.h"
 #include "Tesla/Renderer/VertexArray.h"
 #include "Tesla/Renderer/Shader.h"
+#include "Tesla/Renderer/Framebuffer.h"
 #include "Tesla/Renderer/Texture.h"
 
 #include "Tesla/Renderer/OrthographicCamera.h"
