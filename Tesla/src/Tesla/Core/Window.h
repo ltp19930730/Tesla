@@ -9,10 +9,10 @@ namespace Tesla {
 	struct WindowProps
 	{
 		std::string Title;
-		unsigned int Width;
-		unsigned int Height;
+		uint32_t Width;
+		uint32_t Height;
 
-		WindowProps(const std::string& title = "Tesla Engine", unsigned int width = 1920, unsigned int height = 1080) : Title(title), Width(width), Height(height){}
+		WindowProps(const std::string& title = "Tesla Engine", uint32_t width = 1920, uint32_t height = 1080) : Title(title), Width(width), Height(height){}
 	};
 
 	// Interface representing a desktop system based Window
@@ -25,8 +25,8 @@ namespace Tesla {
 
 		virtual void OnUpdate() = 0;
 
-		virtual unsigned int GetWidth() const = 0;
-		virtual unsigned int GetHeight() const = 0;
+		virtual uint32_t GetWidth() const = 0;
+		virtual uint32_t GetHeight() const = 0;
 
 
 		// Window Attributes

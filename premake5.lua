@@ -136,3 +136,51 @@ project "Sandbox"
         defines "TL_DIST"
         runtime "Release"
         optimize  "on"
+
+project "Tesla-Editor"
+	location "Tesla-Editor"
+	kind "ConsoleApp"
+	language "C++"
+	cppdialect "C++17"
+	staticruntime "on"
+
+	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
+	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
+
+	files
+	{
+		"%{prj.name}/src/**.h",
+		"%{prj.name}/src/**.cpp"
+	}
+
+	includedirs
+	{
+		"Tesla/vendor/spdlog/include",
+		"Tesla/src",
+		"Tesla/vendor",
+		"%{IncludeDir.glm}"
+	}
+
+	links
+	{
+		"Tesla"
+	}
+
+	filter "system:windows"
+		systemversion "latest"
+
+	filter "configurations:Debug"
+		defines "TL_DEBUG"
+		runtime "Debug"
+		symbols "on"
+
+	filter "configurations:Release"
+		defines "TL_RELEASE"
+		runtime "Release"
+		optimize "on"
+
+	filter "configurations:Dist"
+		defines "TL_DIST"
+		runtime "Release"
+		optimize "on"
+
