@@ -5,16 +5,16 @@
 #include "EditorLayer.h"
 
 namespace Tesla {
-	class TeslaEditor : public Application
+	class Teslanut : public Application
 	{
 	public:
-		TeslaEditor()
-			: Application("TESLA editor")
+		Teslanut()
+			: Application("Teslanut")
 		{
 			PushLayer(new EditorLayer());
 		}
 
-		~TeslaEditor()
+		~Teslanut()
 		{
 
 		}
@@ -22,6 +22,6 @@ namespace Tesla {
 
 	Application* CreateApplication()
 	{
-		return new TeslaEditor();
+		return new Teslanut();
 	}
 }

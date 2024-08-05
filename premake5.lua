@@ -1,6 +1,6 @@
 workspace "Tesla"
     architecture "x64"
-    startproject "Sandbox"
+    startproject "Teslanut"
 
     configurations
     {
@@ -137,8 +137,8 @@ project "Sandbox"
         runtime "Release"
         optimize  "on"
 
-project "Tesla-Editor"
-	location "Tesla-Editor"
+project "Teslanut"
+	location "Teslanut"
 	kind "ConsoleApp"
 	language "C++"
 	cppdialect "C++17"
