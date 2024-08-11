@@ -23,6 +23,9 @@
 
 #include "Tesla/ImGui/ImGuiLayer.h"
 
+#include "Tesla/Scene/Scene.h"
+#include "Tesla/Scene/Components.h"
+
 // ----- Rendering -------
 #include "Tesla/Renderer/RenderCommand.h"
 #include "Tesla/Renderer/Renderer.h"

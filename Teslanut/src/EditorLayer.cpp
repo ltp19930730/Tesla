@@ -14,15 +14,22 @@ namespace Tesla {
 	{
 		TL_PROFILE_FUNCTION();
 
-		m_CheckerboardTexture = Tesla::Texture2D::Create("assets/textures/Checkerboard.png");
+		m_CheckerboardTexture = Texture2D::Create("assets/textures/Checkerboard.png");
 
 		ImGuiIO& io = ImGui::GetIO();
 		io.Fonts->AddFontFromFileTTF("assets/OpenSans-Regular.ttf", 30.0f);
 
-		Tesla::FramebufferSpecification fbSpec;
+		FramebufferSpecification fbSpec;
 		fbSpec.Width = 1280;
 		fbSpec.Height = 720;
-		m_Framebuffer = Tesla::Framebuffer::Create(fbSpec);
+		m_Framebuffer = Framebuffer::Create(fbSpec);
+
+		m_ActiveScene = CreateRef<Scene>();
+
+		auto square = m_ActiveScene->CreateEntity();
+		m_ActiveScene->Reg().emplace<TransformComponent>(square);
+		m_ActiveScene->Reg().emplace<SpriteRendererComponent>(square, glm::vec4{0.0f, 1.0f, 0.0f, 1.0f});
+		m_SquareEntity = square;
 	}
 
 	void EditorLayer::OnDetach()
@@ -30,7 +37,7 @@ namespace Tesla {
 		TL_PROFILE_FUNCTION();
 	}
 
-	void EditorLayer::OnUpdate(Tesla::Timestep ts, float time)
+	void EditorLayer::OnUpdate(Timestep ts, float time)
 	{
 		TL_PROFILE_FUNCTION();
 
@@ -46,42 +53,17 @@ namespace Tesla {
 		if (m_ViewportFocused)
 			m_CameraController.OnUpdate(ts);
 
-
 		// Render
-		Tesla::Renderer2D::ResetStats();
-		{
-			TL_PROFILE_SCOPE("Renderer Prep");
-			m_Framebuffer->Bind();
-			Tesla::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
-			Tesla::RenderCommand::Clear();
-		}
+		Renderer2D::ResetStats();
+		m_Framebuffer->Bind();
+		RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
+		RenderCommand::Clear();
 
-		{
-			static float rotation = 0.0f;
-			rotation += ts * 50.0f;
-
-			TL_PROFILE_SCOPE("Renderer Draw");
-			Tesla::Renderer2D::BeginScene(m_CameraController.GetCamera());
-			Tesla::Renderer2D::DrawRotatedQuad({ -1.0f, 0.0f }, { 0.8f, 0.8f }, rotation, { 0.8f, 0.2f, 0.3f, 1.0f });
-			Tesla::Renderer2D::DrawQuad({ -1.0f, 0.0f }, { 0.8f, 0.8f }, { 0.8f, 0.2f, 0.3f, 1.0f });
-			Tesla::Renderer2D::DrawQuad({ 0.5f, -0.5f }, { 0.5f, 0.75f }, m_SquareColor);
-			Tesla::Renderer2D::DrawQuad({ 0.0f, 0.0f, -0.1f }, { 20.0f, 20.0f }, m_CheckerboardTexture, 10.0f);
-			Tesla::Renderer2D::DrawRotatedQuad({ -2.0f, 0.0f, 0.0f }, { 1.0f, 1.0f }, rotation, m_CheckerboardTexture, 20.0f);
-			Tesla::Renderer2D::EndScene();
-
-
-			Tesla::Renderer2D::BeginScene(m_CameraController.GetCamera());
-			for (float y = -5.0f; y < 5.0f; y += 0.5f)
-			{
-				for (float x = -5.0f; x < 5.0f; x += 0.5f)
-				{
-					glm::vec4 color = { (x + 5.0f) / 10.0f, 0.4f, (y + 5.0f) / 10.0f, 0.7f };
-					Tesla::Renderer2D::DrawQuad({ x, y }, { 0.45f, 0.45f }, color);
-				}
-			}
-			Tesla::Renderer2D::EndScene();
-			m_Framebuffer->Unbind();
-		}
+		Renderer2D::BeginScene(m_CameraController.GetCamera());
+			
+		m_ActiveScene->OnUpdate(ts);
+		Renderer2D::EndScene();
+		m_Framebuffer->Unbind();
 	}
 
 	void EditorLayer::OnImGuiRender()
@@ -133,7 +115,7 @@ namespace Tesla {
 				// which we can't undo at the moment without finer window depth/z control.
 				//ImGui::MenuItem("Fullscreen", NULL, &opt_fullscreen_persistant);
 
-				if (ImGui::MenuItem("Exit")) Tesla::Application::Get().Close();
+				if (ImGui::MenuItem("Exit")) Application::Get().Close();
 				ImGui::EndMenu();
 			}
 			ImGui::EndMenuBar();
@@ -141,13 +123,15 @@ namespace Tesla {
 
 		ImGui::Begin("Settings");
 
-		auto stats = Tesla::Renderer2D::GetStats();
+		auto stats = Renderer2D::GetStats();
 		ImGui::Text("Renderer2D Stats:");
 		ImGui::Text("Draw Calls: %d", stats.DrawCalls);
 		ImGui::Text("Quads: %d", stats.QuadCount);
 		ImGui::Text("Vertices: %d", stats.GetTotalVertexCount());
 		ImGui::Text("Indices: %d", stats.GetTotalIndexCount());
-		ImGui::ColorEdit4("Square Color", glm::value_ptr(m_SquareColor));
+
+		auto& squareColor = m_ActiveScene->Reg().get<SpriteRendererComponent>(m_SquareEntity).Color;
+		ImGui::ColorEdit4("Square Color", glm::value_ptr(squareColor));
 
 		ImGui::End();
 
@@ -166,11 +150,9 @@ namespace Tesla {
 		ImGui::PopStyleVar();
 
 		ImGui::End();
-
 	}
 
-
-	void EditorLayer::OnEvent(Tesla::Event& e)
+	void EditorLayer::OnEvent(Event& e)
 	{
 		TL_PROFILE_FUNCTION();
 		m_CameraController.OnEvent(e);

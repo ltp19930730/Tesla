@@ -17,6 +17,7 @@ IncludeDir["Glad"] = "Tesla/vendor/Glad/include"
 IncludeDir["ImGui"] = "Tesla/vendor/imgui"
 IncludeDir["glm"] = "Tesla/vendor/glm"
 IncludeDir["stb_image"] = "Tesla/vendor/stb_image"
+IncludeDir["entt"] = "Tesla/vendor/entt/include"
 
 group "Dependencies"
     include "Tesla/vendor/GLFW"
@@ -61,7 +62,8 @@ project "Tesla"
         "%{IncludeDir.Glad}",
         "%{IncludeDir.ImGui}",
         "%{IncludeDir.glm}",
-        "%{IncludeDir.stb_image}"
+        "%{IncludeDir.stb_image}",
+        "%{IncludeDir.entt}"
     }
 
     links
@@ -158,7 +160,8 @@ project "Teslanut"
 		"Tesla/vendor/spdlog/include",
 		"Tesla/src",
 		"Tesla/vendor",
-		"%{IncludeDir.glm}"
+	    "%{IncludeDir.glm}",
+        "%{IncludeDir.entt}"
 	}
 
 	links
