@@ -13,7 +13,7 @@ namespace Tesla {
 			: Transform(transform) {}
 
 		operator glm::mat4& () { return Transform; }
-		operator const glm::mat4& () { return Transform; }
+		operator const glm::mat4& () const { return Transform; }
 	};
 
 	struct SpriteRendererComponent
