@@ -27,15 +27,9 @@ namespace Tesla {
 
 	class Instrumentor
 	{
-	private:
-		std::mutex m_Mutex;
-		InstrumentationSession* m_CurrentSession;
-		std::ofstream m_OutputStream;
 	public:
-		Instrumentor()
-			: m_CurrentSession(nullptr)
-		{
-		}
+		Instrumentor(const Instrumentor&) = delete;
+		Instrumentor(Instrumentor&&) = delete;
 
 		void BeginSession(const std::string& name, const std::string& filepath = "results.json")
 		{
@@ -99,6 +93,15 @@ namespace Tesla {
 			return instance;
 		}
 	private:
+		Instrumentor()
+			: m_CurrentSession(nullptr)
+		{
+		}
+
+		~Instrumentor()
+		{
+			EndSession();
+		}
 		void WriteHeader()
 		{
 			m_OutputStream << "{\"otherData\": {},\"traceEvents\":[{}";
@@ -121,6 +124,10 @@ namespace Tesla {
 				m_CurrentSession = nullptr;
 			}
 		}
+
+		std::mutex m_Mutex;
+		InstrumentationSession* m_CurrentSession;
+		std::ofstream m_OutputStream;
 	};
 
 	class InstrumentationTimer
@@ -160,7 +167,9 @@ namespace Tesla {
 #if TL_PROFILE
 #define TL_PROFILE_BEGIN_SESSION(name, filepath) ::Tesla::Instrumentor::Get().BeginSession(name, filepath)
 #define TL_PROFILE_END_SESSION() ::Tesla::Instrumentor::Get().EndSession()
-#define TL_PROFILE_SCOPE(name) ::Tesla::InstrumentationTimer timer##__LINE__(name);
+#define TL_PROFILE_SCOPE_LINE2(name, line) constexpr auto fixedName##line = ::Tesla::InstrumentorUtils::CleanupOutputString(name, "__cdecl ");\
+											   ::tesla::InstrumentationTimer timer##line(fixedName##line.Data)
+#define TL_PROFILE_SCOPE_LINE(name, line) TL_PROFILE_SCOPE_LINE2(name, line)
 #define TL_PROFILE_FUNCTION() TL_PROFILE_SCOPE(__FUNCSIG__)
 #else
 #define TL_PROFILE_BEGIN_SESSION(name, filepath)
