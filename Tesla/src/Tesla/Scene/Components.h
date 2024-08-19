@@ -2,6 +2,8 @@
 
 #include <glm/glm.hpp>
 
+#include "Tesla/Renderer/Camera.h"
+
 namespace Tesla {
 	struct TagComponent
 	{
@@ -33,5 +35,16 @@ namespace Tesla {
 		SpriteRendererComponent() = default;
 		SpriteRendererComponent(const SpriteRendererComponent&) = default;
 		SpriteRendererComponent(const glm::vec4& color) : Color(color) {}
+	};
+
+	struct CameraComponent
+	{
+		Camera Camera;
+		bool Primary = true; // TODO: think about moving to Scene
+
+		CameraComponent() = default;
+		CameraComponent(const CameraComponent&) = default;
+		CameraComponent(const glm::mat4& projection)
+			: Camera(projection) {}
 	};
 }
