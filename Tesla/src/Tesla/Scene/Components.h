@@ -2,7 +2,7 @@
 
 #include <glm/glm.hpp>
 
-#include "Tesla/Renderer/Camera.h"
+#include "SceneCamera.h"
 
 namespace Tesla {
 	struct TagComponent
@@ -39,12 +39,11 @@ namespace Tesla {
 
 	struct CameraComponent
 	{
-		Camera Camera;
+		SceneCamera Camera;
 		bool Primary = true; // TODO: think about moving to Scene
+		bool FixedAspectRatio = false;
 
 		CameraComponent() = default;
 		CameraComponent(const CameraComponent&) = default;
-		CameraComponent(const glm::mat4& projection)
-			: Camera(projection) {}
 	};
 }
