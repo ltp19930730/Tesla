@@ -26,6 +26,7 @@
 #include "Tesla/Scene/Scene.h"
 #include "Tesla/Scene/Components.h"
 #include "Tesla/Scene/Entity.h"
+#include "Tesla/Scene/ScriptableEntity.h"
 
 // ----- Rendering -------
 #include "Tesla/Renderer/RenderCommand.h"
