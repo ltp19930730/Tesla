@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Tesla.h"
+#include "Panels/SceneHierarchyPanel.h"
 
 namespace Tesla {
 
@@ -27,6 +28,8 @@ namespace Tesla {
 		Entity m_SecondCamera;
 
 		bool m_PrimaryCamera = true;
+
+		SceneHierarchyPanel m_SceneHierarchyPanel;
 
 		bool m_ViewportFocused = false, m_ViewportHovered = false;
 		glm::vec2 m_ViewportSize = { 0.0f, 0.0f };
