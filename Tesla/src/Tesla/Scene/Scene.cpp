@@ -62,7 +62,7 @@ namespace Tesla {
 
 		if (mainCamera)
 		{
-			Renderer2D::BeginScene(mainCamera->GetProjection(), *cameraTransform);
+			Renderer2D::BeginScene(*mainCamera, *cameraTransform);
 
 			auto view = m_Registry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
 			for (auto entity : view)

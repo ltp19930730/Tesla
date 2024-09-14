@@ -1,8 +1,6 @@
 #include "tlpch.h"
-#include "Framebuffer.h"
-
+#include "Tesla/Renderer/Framebuffer.h"
 #include "Tesla/Renderer/Renderer.h"
-
 #include "Platform/OpenGL/OpenGLFramebuffer.h"
 
 namespace Tesla {

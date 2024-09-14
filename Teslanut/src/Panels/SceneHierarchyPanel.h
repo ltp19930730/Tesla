@@ -2,7 +2,6 @@
 
 #include "Tesla/Scene/Scene.h"
 #include "Tesla/Core/Base.h"
-#include "Tesla/Core/Log.h"
 #include "Tesla/Scene/Entity.h"
 
 namespace Tesla {

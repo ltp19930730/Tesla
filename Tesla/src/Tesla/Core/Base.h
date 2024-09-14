@@ -53,13 +53,9 @@
 #define HZ_DEBUGBREAK()
 #endif
 
-#ifdef TL_ENABLE_ASSERTS
-#define TL_ASSERT(x, ...) { if(!(x)) { TL_ERROR("Assertion Failed: {0}", __VA_ARGS__); TL_DEBUGBREAK(); } }
-#define TL_CORE_ASSERT(x, ...) { if(!(x)) { TL_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); TL_DEBUGBREAK(); } }
-#else
-#define TL_ASSERT(x, ...)
-#define TL_CORE_ASSERT(x, ...)
-#endif
+
+#define TL_EXPAND_MACRO(x) x
+#define TL_STRINGIFY_MACRO(x) #x
 
 
 #define BIT(x) (1 << x)
@@ -84,3 +80,6 @@ namespace Tesla {
 		return std::make_shared<T>(std::forward<Args>(args)...);
 	}
 }
+
+#include "Tesla/Core/Log.h"
+#include "Tesla/Core/Assert.h"
