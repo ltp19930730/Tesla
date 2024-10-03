@@ -10,3 +10,6 @@
 [submodule "Tesla/vendor/glm"]
 	path = Tesla/vendor/glm
 	url = https://github.com/g-truc/glm
+[submodule "Tesla/vendor/yaml-cpp"]
+	path = Tesla/vendor/yaml-cpp
+	url = https://github.com/thecherno/yaml-cpp

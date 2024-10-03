@@ -18,11 +18,13 @@ IncludeDir["ImGui"] = "Tesla/vendor/imgui"
 IncludeDir["glm"] = "Tesla/vendor/glm"
 IncludeDir["stb_image"] = "Tesla/vendor/stb_image"
 IncludeDir["entt"] = "Tesla/vendor/entt/include"
+IncludeDir["yaml_cpp"] = "Tesla/vendor/yaml-cpp/include"
 
 group "Dependencies"
     include "Tesla/vendor/GLFW"
     include "Tesla/vendor/GLAD"
     include "Tesla/vendor/imgui"
+    include "Tesla/vendor/yaml-cpp"
 group ""
 
 project "Tesla"
@@ -51,7 +53,8 @@ project "Tesla"
     defines
 	{
 		"_CRT_SECURE_NO_WARNINGS",
-        "GLFW_INCLUDE_NONE"
+        "GLFW_INCLUDE_NONE",
+        "YAML_CPP_STATIC_DEFINE",
 	}
 
     includedirs
@@ -63,7 +66,8 @@ project "Tesla"
         "%{IncludeDir.ImGui}",
         "%{IncludeDir.glm}",
         "%{IncludeDir.stb_image}",
-        "%{IncludeDir.entt}"
+        "%{IncludeDir.entt}",
+        "%{IncludeDir.yaml_cpp}",
     }
 
     links
@@ -71,6 +75,7 @@ project "Tesla"
         "GLFW",
         "Glad",
         "ImGui",
+        "yaml-cpp",
         "opengl32.lib"
     }
 
