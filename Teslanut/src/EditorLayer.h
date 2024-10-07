@@ -33,6 +33,8 @@ namespace Tesla {
 
 		bool m_PrimaryCamera = true;
 
+		int m_GizmoType = 0;
+
 		SceneHierarchyPanel m_SceneHierarchyPanel;
 
 		bool m_ViewportFocused = false, m_ViewportHovered = false;

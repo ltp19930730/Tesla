@@ -19,7 +19,8 @@ project "Teslanut"
 		"%{wks.location}/Tesla/src",
 		"%{wks.location}/Tesla/vendor",
 	    "%{IncludeDir.glm}",
-        "%{IncludeDir.entt}"
+        "%{IncludeDir.entt}",
+		"%{IncludeDir.ImGuizmo}"
 	}
 
 	links

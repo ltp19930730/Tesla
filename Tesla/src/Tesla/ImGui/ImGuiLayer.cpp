@@ -8,6 +8,8 @@
 #include "backends/imgui_impl_glfw.cpp"
 #include "Tesla/Core/Application.h"
 
+#include "ImGuizmo.h"
+
 // TEMPORARY
 
 namespace Tesla {
@@ -72,6 +74,7 @@ namespace Tesla {
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
+		ImGuizmo::BeginFrame();
 	}
 
 	void ImGuiLayer::OnEvent(Event& e)
