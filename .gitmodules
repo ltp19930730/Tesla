@@ -13,3 +13,6 @@
 [submodule "Tesla/vendor/yaml-cpp"]
 	path = Tesla/vendor/yaml-cpp
 	url = https://github.com/thecherno/yaml-cpp
+[submodule "Tesla/vendor/ImGuizmo"]
+	path = Tesla/vendor/ImGuizmo
+	url = https://github.com/thecherno/imguizmo
