@@ -3,6 +3,7 @@
 #include "Tesla/Renderer/OrthographicCamera.h"
 #include "Tesla/Renderer/Texture.h"
 #include "Tesla/Renderer/Camera.h"
+#include "Tesla/Renderer/EditorCamera.h"
 
 namespace Tesla {
 
@@ -13,6 +14,7 @@ namespace Tesla {
 		static void Shutdown();
 
 		static void BeginScene(const Camera& camera, const glm::mat4& transform);
+		static void BeginScene(const EditorCamera& camera);
 		static void BeginScene(const OrthographicCamera& camera); // TODO: Remove
 		static void EndScene();
 		static void Flush();

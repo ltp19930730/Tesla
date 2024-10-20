@@ -2,6 +2,7 @@
 
 #include "Tesla.h"
 #include "Panels/SceneHierarchyPanel.h"
+#include "Tesla/Renderer/EditorCamera.h"
 
 namespace Tesla {
 
@@ -32,6 +33,8 @@ namespace Tesla {
 		Entity m_SecondCamera;
 
 		bool m_PrimaryCamera = true;
+
+		EditorCamera m_EditorCamera;
 
 		int m_GizmoType = 0;
 

@@ -3,6 +3,8 @@
 #include "entt.hpp"
 
 #include "Tesla/Core/Timestep.h"
+#include "Tesla/Renderer/EditorCamera.h"
+#include "entt.hpp"
 
 namespace Tesla {
 	class Entity;
@@ -15,7 +17,8 @@ namespace Tesla {
 		Entity CreateEntity(const std::string& name = std::string());
 		void DestroyEntity(Entity entity);
 
-		void OnUpdate(Timestep ts);
+		void OnUpdateRuntime(Timestep ts);
+		void OnUpdateEditor(Timestep ts, EditorCamera& camera);
 		void OnViewportResize(uint32_t width, uint32_t height);
 
 		Entity GetPrimaryCameraEntity();
