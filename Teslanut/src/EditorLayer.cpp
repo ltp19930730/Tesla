@@ -24,6 +24,7 @@ namespace Tesla {
 		io.Fonts->AddFontFromFileTTF("assets/OpenSans-Regular.ttf", 30.0f);
 
 		FramebufferSpecification fbSpec;
+		fbSpec.Attachments = { FramebufferTextureFormat::RGBA8 , FramebufferTextureFormat::Depth };
 		fbSpec.Width = 1280;
 		fbSpec.Height = 720;
 		m_Framebuffer = Framebuffer::Create(fbSpec);
