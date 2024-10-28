@@ -9,6 +9,7 @@ namespace Tesla {
 		None = 0,
 		// Color
 		RGBA8,
+		RED_INTEGER,
 		// Depth/stencil
 		DEPTH24STENCIL8,
 		// Defaults
@@ -56,6 +57,8 @@ namespace Tesla {
 		virtual const FramebufferSpecification& GetSpecification() const = 0;
 
 		virtual void Resize(uint32_t width, uint32_t height) = 0;
+
+		virtual int ReadPixel(uint32_t attachmentIndex, int x, int y) = 0;
 
 		static Ref<Framebuffer> Create(const FramebufferSpecification& spec);
 	};
