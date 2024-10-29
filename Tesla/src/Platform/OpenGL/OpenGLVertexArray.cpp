@@ -67,17 +67,48 @@ namespace  Tesla {
 		const auto& layout = vertexBuffer->GetLayout();
 		for (const auto& element : layout)
 		{
-			glEnableVertexArrayAttrib(m_RendererID, index);
-			glVertexArrayAttribFormat(m_RendererID, index,
-				element.GetComponentCount(),
-				ShaderDataTypeToOpenGLBaseType(element.Type),
-				element.Normalized ? GL_TRUE : GL_FALSE,
-				element.Offset);
-			// Associate attributes with binding points
-			glVertexArrayAttribBinding(m_RendererID, index, index);
-			// Bind the buffer to the VAO's vertex buffer binding point
-			glVertexArrayVertexBuffer(m_RendererID, index, vertexBuffer->GetId(), 0, layout.GetStride());
-			index++;
+			switch (element.Type)
+			{
+			case ShaderDataType::Float:
+			case ShaderDataType::Float2:
+			case ShaderDataType::Float3:
+			case ShaderDataType::Float4:
+			case ShaderDataType::Mat3:
+			case ShaderDataType::Mat4: {
+				glEnableVertexArrayAttrib(m_RendererID, index);
+				glVertexArrayAttribFormat(m_RendererID, index,
+					element.GetComponentCount(),
+					ShaderDataTypeToOpenGLBaseType(element.Type),
+					element.Normalized ? GL_TRUE : GL_FALSE,
+					element.Offset);
+				// Associate attributes with binding points
+				glVertexArrayAttribBinding(m_RendererID, index, index);
+				// Bind the buffer to the VAO's vertex buffer binding point
+				glVertexArrayVertexBuffer(m_RendererID, index, vertexBuffer->GetId(), 0, layout.GetStride());
+				index++;
+				break;
+			}
+			case ShaderDataType::Int:
+			case ShaderDataType::Int2:
+			case ShaderDataType::Int3:
+			case ShaderDataType::Int4:
+			case ShaderDataType::Bool:
+			{
+				glEnableVertexArrayAttrib(m_RendererID, index);
+				glVertexArrayAttribIFormat(m_RendererID, index,
+					element.GetComponentCount(),
+					ShaderDataTypeToOpenGLBaseType(element.Type),
+					element.Offset);
+				// Associate attributes with binding points
+				glVertexArrayAttribBinding(m_RendererID, index, index);
+				// Bind the buffer to the VAO's vertex buffer binding point
+				glVertexArrayVertexBuffer(m_RendererID, index, vertexBuffer->GetId(), 0, layout.GetStride());
+				index++;
+				break;
+			}
+			default:
+				TL_CORE_ASSERT(false, "Unknown ShaderDataType!");
+			}
 		}
 
 		m_VertexBuffers.push_back(vertexBuffer);
